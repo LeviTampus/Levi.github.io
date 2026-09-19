@@ -11,6 +11,5 @@ dist/
 # OS / editor
 .DS_Store
 Thumbs.db
--ignore mockup-
-
+# Design reference (local only)
 desgin-preference.png
