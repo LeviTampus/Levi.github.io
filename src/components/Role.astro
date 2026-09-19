@@ -4,12 +4,18 @@ interface Props {
   title: string;
   dates: string;
   bullets: string[];
+  variant?: 'current' | 'earlier';
 }
 
-const { company, title, dates, bullets } = Astro.props;
+const { company, title, dates, bullets, variant = 'current' } = Astro.props;
 ---
-<article class="role">
+<article class={`role ${variant}`}>
   <header>
+    {variant === 'current' ? (
+      <p class="tag current-label">Current</p>
+    ) : (
+      <p class="tag earlier-label">Earlier experience</p>
+    )}
     <h3>{title} — {company}</h3>
     <p class="tag dates">{dates}</p>
   </header>
@@ -29,6 +35,36 @@ const { company, title, dates, bullets } = Astro.props;
 
   .role h3 {
     margin: 0 0 0.25rem;
+  }
+
+  .current-label {
+    display: inline-block;
+    margin: 0 0 0.5rem;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 0.1rem 0.5rem;
+  }
+
+  .role.earlier {
+    border-left-color: var(--border);
+    margin-bottom: 0;
+  }
+
+  .role.earlier h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .role.earlier ul {
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .earlier-label {
+    margin: 0 0 0.5rem;
+    color: var(--muted);
   }
 
   .dates {

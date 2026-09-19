@@ -9,7 +9,7 @@ import { getCollection } from 'astro:content';
 
 const ORDER = ['workato', 'earlier'];
 const experience = (await getCollection('experience')).sort(
-  (a, b) => ORDER.indexOf(a.slug) - ORDER.indexOf(b.slug),
+  (a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id),
 );
 const projects = (await getCollection('projects')).sort((a, b) =>
   a.slug.localeCompare(b.slug),
@@ -86,12 +86,13 @@ const github = 'https://github.com/LeviTampus';
 
   <section id="experience" aria-label="Professional experience">
     <h2>Experience</h2>
-    {experience.map((entry) => (
+    {experience.map((entry, i) => (
       <Role
         company={entry.data.company}
         title={entry.data.title}
         dates={entry.data.dates}
         bullets={entry.data.bullets}
+        variant={i === 0 ? 'current' : 'earlier'}
       />
     ))}
   </section>
