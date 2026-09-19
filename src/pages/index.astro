@@ -2,11 +2,15 @@
 import Base from '../layouts/Base.astro';
 import Role from '../components/Role.astro';
 import SkillGroup from '../components/SkillGroup.astro';
+import ProjectCard from '../components/ProjectCard.astro';
 import { getCollection } from 'astro:content';
 
 const ORDER = ['workato', 'earlier'];
 const experience = (await getCollection('experience')).sort(
   (a, b) => ORDER.indexOf(a.slug) - ORDER.indexOf(b.slug),
+);
+const projects = (await getCollection('projects')).sort((a, b) =>
+  a.slug.localeCompare(b.slug),
 );
 
 const email = 'levijoantampus@gmail.com';
@@ -88,6 +92,14 @@ const github = 'https://github.com/LeviTampus';
 
   <section id="projects" aria-label="Featured projects">
     <h2>Featured Projects</h2>
+    {projects.map(async (p) => {
+      const { Content } = await p.render();
+      return (
+        <ProjectCard project={p}>
+          <Content />
+        </ProjectCard>
+      );
+    })}
   </section>
 
   <section id="recipes" aria-label="Workato recipes and workflow examples">
