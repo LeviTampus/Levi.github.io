@@ -1,0 +1,62 @@
+---
+const links = [
+  { href: '#summary', label: 'Summary' },
+  { href: '#skills', label: 'Skills' },
+  { href: '#experience', label: 'Experience' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#recipes', label: 'Recipes' },
+  { href: '#archive', label: 'Archive' },
+  { href: '#certifications', label: 'Certifications' },
+  { href: '#contact', label: 'Contact' },
+];
+---
+<nav aria-label="Sections">
+  <a class="brand" href="#top">Levi Joan Tampus</a>
+  <ul>
+    {links.map((l) => (
+      <li><a href={l.href}>{l.label}</a></li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    min-height: var(--nav-h);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0 1.25rem;
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .brand {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  ul a {
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.25rem 0;
+  }
+
+  ul a:hover {
+    color: var(--text);
+  }
+</style>

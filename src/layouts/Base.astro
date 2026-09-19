@@ -1,0 +1,39 @@
+---
+import '../styles/tokens.css';
+import SectionNav from '../components/SectionNav.astro';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body id="top">
+    <SectionNav />
+    <main>
+      <slot />
+    </main>
+    <footer>
+      <p>Levi Joan Tampus — Cebu City, Philippines</p>
+    </footer>
+  </body>
+</html>
+
+<style>
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 1.25rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+</style>
