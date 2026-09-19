@@ -7,17 +7,17 @@ import { site } from '../data/site';
       <p class="brand">{site.name}</p>
       <p class="tagline">{site.tagline}</p>
     </div>
-    <ul class="social">
-      <li>
-        <a href={site.github} target="_blank" rel="noopener noreferrer">GitHub</a>
-      </li>
-      <li>
-        <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      </li>
-      <li>
-        <a href={`mailto:${site.email}`}>Email</a>
-      </li>
-    </ul>
+    <div class="actions">
+      <ul class="social">
+        <li>
+          <a href={site.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+        </li>
+        <li>
+          <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </li>
+      </ul>
+      <a class="connect" href={`mailto:${site.email}`}>Let's connect</a>
+    </div>
   </div>
 </footer>
 
@@ -25,7 +25,7 @@ import { site } from '../data/site';
   footer {
     border-top: 1px solid var(--border);
     background: var(--surface);
-    padding: 2rem 1.25rem;
+    padding: 1.75rem 1.25rem;
   }
 
   .inner {
@@ -40,13 +40,21 @@ import { site } from '../data/site';
 
   .brand {
     margin: 0;
+    font-family: var(--font-display);
     font-weight: 800;
   }
 
   .tagline {
     margin: 0.15rem 0 0;
     color: var(--muted);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
   }
 
   .social {
@@ -60,11 +68,25 @@ import { site } from '../data/site';
 
   .social a {
     color: var(--ink);
-    font-weight: 600;
+    font-weight: 500;
     text-decoration: none;
   }
 
   .social a:hover {
     color: var(--accent-strong);
+  }
+
+  .connect {
+    background: var(--accent-deep);
+    color: var(--accent-ink);
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 999px;
+    padding: 0.55rem 1.15rem;
+    white-space: nowrap;
+  }
+
+  .connect:hover {
+    background: var(--accent-strong);
   }
 </style>

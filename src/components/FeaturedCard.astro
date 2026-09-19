@@ -1,0 +1,242 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Button from './Button.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { title, type, tagline, technologies, links, featured } = project.data;
+const pills = technologies.slice(0, 4);
+
+const badge: Record<string, string> = {
+  professional: 'Professional',
+  personal: 'Personal',
+  learning: 'Learning',
+};
+
+const steps = [
+  'Trigger received',
+  'Fetch logs and payload',
+  'Call API endpoints',
+  'Retrieve help docs',
+  'Diagnose and write report',
+];
+---
+<article class="featured-card">
+  <div class="copy">
+    <p class="tags">
+      <span class="tag badge">{badge[type]}</span>
+      {featured && <span class="tag featured-tag">Featured</span>}
+    </p>
+    <h3>{title}</h3>
+    <p class="tagline">{tagline}</p>
+    {pills.length > 0 && (
+      <ul class="tech" aria-label="Technologies">
+        {pills.map((t) => (
+          <li>{t}</li>
+        ))}
+      </ul>
+    )}
+    {links.demo && (
+      <p class="links">
+        <Button href={links.demo} external>Live demo</Button>
+      </p>
+    )}
+  </div>
+
+  <div class="trace" aria-hidden="true">
+    <div class="trace-head">
+      <span class="trace-dot"></span>
+      <span class="trace-title">Diagnostic run</span>
+      <span class="trace-status">Resolved</span>
+    </div>
+    <ol class="trace-steps">
+      {steps.map((step, i) => (
+        <li>
+          <span class="trace-index">{String(i + 1).padStart(2, '0')}</span>
+          <span class="trace-label">{step}</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+</article>
+
+<style>
+  .featured-card {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: 1.75rem;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    padding: 1.5rem;
+  }
+
+  .copy {
+    min-width: 0;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0 0 0.6rem;
+  }
+
+  .badge,
+  .featured-tag {
+    display: inline-block;
+    border-radius: 999px;
+    padding: 0.15rem 0.7rem;
+    margin: 0;
+  }
+
+  .badge {
+    color: var(--muted);
+    background: var(--surface-tint);
+    border: 1px solid var(--border);
+  }
+
+  .featured-tag {
+    color: var(--accent-strong);
+    background: var(--accent-soft);
+  }
+
+  .featured-card h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.35rem;
+  }
+
+  .tagline {
+    margin: 0 0 1rem;
+    color: var(--muted);
+  }
+
+  .tech {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    gap: 0.4rem;
+    list-style: none;
+    margin: 0 0 1.25rem;
+    padding: 0;
+  }
+
+  .tech li {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.2rem 0.65rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  .links {
+    margin: 0;
+  }
+
+  /* Simplified diagnostic trace — replaces the old faux window mockup. */
+  .trace {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-s);
+    background: var(--bg);
+    padding: 1rem 1.1rem;
+  }
+
+  .trace-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .trace-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+
+  .trace-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .trace-status {
+    margin-left: auto;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--accent-strong);
+    background: var(--accent-soft);
+    border-radius: 999px;
+    padding: 0.15rem 0.55rem;
+  }
+
+  .trace-steps {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0.35rem 0 0;
+  }
+
+  .trace-steps::before {
+    content: '';
+    position: absolute;
+    left: 0.25rem;
+    top: 1rem;
+    bottom: 1rem;
+    width: 1px;
+    background: var(--rule);
+  }
+
+  .trace-steps li {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.35rem 0;
+  }
+
+  .trace-steps li::before {
+    content: '';
+    flex: 0 0 auto;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    z-index: 1;
+  }
+
+  .trace-steps li:last-child::before {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .trace-index {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  .trace-label {
+    font-size: 0.82rem;
+    color: var(--ink);
+  }
+
+  @media (max-width: 760px) {
+    .featured-card {
+      grid-template-columns: 1fr;
+    }
+
+    .trace {
+      max-width: 24rem;
+    }
+  }
+</style>

@@ -1,0 +1,133 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FeaturedCard from './FeaturedCard.astro';
+import Role from './Role.astro';
+import { skillIcons } from '../data/skillIcons';
+import { site } from '../data/site';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  experience: CollectionEntry<'experience'>[];
+}
+
+const { project, experience } = Astro.props;
+const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
+---
+<section id="featured" aria-label="Featured project and recent experience">
+  <div class="band">
+    <div class="featured">
+      <div class="col-header">
+        <h2>
+          <span class="icon" aria-hidden="true" set:html={skillIcons.Folder} />
+          Featured project
+        </h2>
+        <a href={`${base}/projects`} class="view-all">View all projects</a>
+      </div>
+      <FeaturedCard project={project} />
+    </div>
+
+    <aside class="recent" aria-label="Recent experience">
+      <div class="col-header">
+        <h2>
+          <span class="icon" aria-hidden="true" set:html={skillIcons.Briefcase} />
+          Recent experience
+        </h2>
+        <a
+          href={site.linkedin}
+          class="view-all"
+          target="_blank"
+          rel="noopener noreferrer"
+        >View all</a>
+      </div>
+      <div class="roles">
+        {experience.map((entry) => (
+          <Role
+            company={entry.data.company}
+            title={entry.data.title}
+            dates={entry.data.dates}
+            bullets={entry.data.bullets}
+            variant={entry.data.tier}
+          />
+        ))}
+      </div>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .band {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .featured {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .col-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0 0 0.85rem;
+  }
+
+  .col-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    font-size: 1.15rem;
+  }
+
+  .icon {
+    display: grid;
+    place-items: center;
+    width: 1.1rem;
+    height: 1.1rem;
+    color: var(--accent);
+  }
+
+  .icon :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+
+  .col-header .icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .view-all {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .view-all:hover {
+    text-decoration: underline;
+  }
+
+  .roles {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .band .roles :global(.role) {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 980px) {
+    .band {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .recent {
+      max-width: 40rem;
+    }
+  }
+</style>

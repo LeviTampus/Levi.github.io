@@ -22,7 +22,7 @@ export default defineConfig({
   output: 'static',
   site: 'https://levitampus.github.io',
   // Deployed as a GitHub project site; preserved until the deploy repo is final.
-  base: '/portfolio-redesign',
+  base: '/Levi.github.io',
   integrations: [sitemap()],
   markdown: {
     rehypePlugins: [demoteHeadings],

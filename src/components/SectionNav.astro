@@ -1,14 +1,26 @@
 ---
 import { site, navLinks } from '../data/site';
+const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
+const path = Astro.url.pathname;
+const linkHref = (href: string) => `${base}${href}`;
+const isCurrent = (href: string) =>
+  href === '/' ? path === `${base}/` : path.startsWith(linkHref(href));
 ---
-<nav aria-label="Sections">
-  <a class="brand" href="#top">{site.name}</a>
+<nav aria-label="Primary">
+  <a class="brand" href={`${base}/`}>{site.name}</a>
   <ul class="links">
     {navLinks.map((l) => (
-      <li><a href={l.href}>{l.label}</a></li>
+      <li>
+        <a
+          href={linkHref(l.href)}
+          aria-current={isCurrent(l.href) ? 'page' : undefined}
+        >
+          {l.label}
+        </a>
+      </li>
     ))}
   </ul>
-  <a class="connect" href="#contact">Let's connect →</a>
+  <a class="connect" href={`mailto:${site.email}`}>Let's connect</a>
 </nav>
 
 <style>
@@ -22,14 +34,14 @@ import { site, navLinks } from '../data/site';
     align-items: center;
     gap: 0.5rem 1rem;
     padding: 0.5rem 1.25rem;
-    background: color-mix(in srgb, var(--bg) 88%, transparent);
-    backdrop-filter: blur(8px);
+    background: var(--surface);
     border-bottom: 1px solid var(--border);
   }
 
   .brand {
     color: var(--ink);
     text-decoration: none;
+    font-family: var(--font-display);
     font-weight: 800;
     white-space: nowrap;
   }
@@ -37,9 +49,9 @@ import { site, navLinks } from '../data/site';
   .links {
     display: flex;
     flex-wrap: nowrap;
-    gap: 0.25rem 1rem;
+    gap: 0.25rem 1.25rem;
     list-style: none;
-    margin: 0;
+    margin: 0 0 0 auto;
     padding: 0;
     overflow-x: auto;
     min-width: 0;
@@ -58,19 +70,23 @@ import { site, navLinks } from '../data/site';
     white-space: nowrap;
   }
 
+  .links a[aria-current="page"],
   .links a:hover {
     color: var(--accent-strong);
   }
 
   .connect {
-    margin-left: auto;
-    background: var(--accent-strong);
+    background: var(--accent-deep);
     color: var(--accent-ink);
     font-weight: 700;
     text-decoration: none;
-    border-radius: var(--radius);
-    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    padding: 0.5rem 1.15rem;
     white-space: nowrap;
+  }
+
+  .connect:hover {
+    background: var(--accent-strong);
   }
 
   @media (max-width: 760px) {
@@ -78,6 +94,9 @@ import { site, navLinks } from '../data/site';
       order: 3;
       flex-basis: 100%;
       padding-bottom: 0.15rem;
+    }
+    .connect {
+      margin-left: auto;
     }
   }
 </style>

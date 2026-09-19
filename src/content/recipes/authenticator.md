@@ -1,6 +1,7 @@
 ---
-title: 'Authenticator'
-workatoUrl: 'https://app.workato.com/recipes/71999486?st=b319633ffe489630c75a5d6084d36b1c8e5259a767891ee288eeeed41d4032ef'
-access: 'gated'
+title: 'Google Authenticator via Slack'
+workatoUrl: 'https://app.workato.com/recipes/71999486-authenticator-1/browse?community=us'
+access: 'public'
+purpose: 'Generates the 6-digit authenticator code in JavaScript and posts it to Slack, so you don''t have to open the Google Authenticator app each time.'
 order: 1
 ---

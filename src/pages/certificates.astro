@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import CertTile from '../components/CertTile.astro';
+import Button from '../components/Button.astro';
+import { getCollection } from 'astro:content';
+
+const certs = (await getCollection('certs')).sort(
+  (a, b) => (a.data.order ?? 0) - (b.data.order ?? 0),
+);
+
+const title = 'Certificates — Levi Joan Tampus';
+const description =
+  'Coursework and certificates from Levi Joan Tampus — each tile links to its verification page.';
+const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
+---
+
+<Base title={title} description={description}>
+  <section id="certificates" aria-label="Certificates">
+    <h1>Certificates</h1>
+    <p class="section-sub">
+      Coursework I'm happy to show — each tile links to its verification page.
+    </p>
+    <div class="cert-grid">
+      {certs.map((c) => (
+        <CertTile cert={c} />
+      ))}
+    </div>
+  </section>
+
+  <section id="contact" aria-label="Contact">
+    <h2>Questions about my background?</h2>
+    <p class="section-sub">
+      I'm happy to chat about how these fit into my day-to-day work.
+    </p>
+    <p class="contact-actions">
+      <Button href="mailto:levijoantampus@gmail.com">Email me</Button>
+      <Button href={`${base}/projects`} variant="secondary">View projects</Button>
+    </p>
+  </section>
+</Base>
+
+<style>
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin: 0 0 0.5rem;
+  }
+
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: 1rem;
+  }
+
+  .contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin: 0;
+  }
+</style>

@@ -6,7 +6,7 @@ interface Props {
 }
 
 const { recipe } = Astro.props;
-const { title, workatoUrl, purpose } = recipe.data;
+const { title, workatoUrl, purpose, access } = recipe.data;
 ---
 <article class="recipe">
   <div>
@@ -14,7 +14,7 @@ const { title, workatoUrl, purpose } = recipe.data;
     {purpose && <p>{purpose}</p>}
   </div>
   <a href={workatoUrl} target="_blank" rel="noopener noreferrer">
-    View in Workato<span class="tag muted"> (requires sign-in)</span>
+    View in Workato{access === 'gated' && <span class="tag muted"> (requires sign-in)</span>}
   </a>
 </article>
 

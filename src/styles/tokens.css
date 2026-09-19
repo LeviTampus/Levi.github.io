@@ -1,30 +1,33 @@
-/* Design tokens — "warm paper workshop" direction.
-   Cream foundation, ink text, coral primary, lavender secondary.
-   --accent is the brand/decorative coral. --accent-strong is the
-   text/button-safe variant (>= 4.5:1 on cream and white). */
+/* Design tokens — warm, personal direction.
+   Cream ground, coral accent, soft rounded surfaces, and a
+   handwritten signature face for the human touch. */
 
 :root {
   --bg: #fdf8f1;
   --surface: #ffffff;
   --surface-tint: #faf3e9;
-  --ink: #22313b;
-  --muted: #5e6b75;
-  --border: #eddfd0;
-  --accent: #ef6339;
-  --accent-strong: #c2451f;
+  --ink: #2b2724;
+  --muted: #6f6459;
+  --border: #ece1d4;
+  --rule: #e3d7c8;
+  --accent: #ef6340;
+  --accent-deep: #c3411c;
+  --accent-strong: #a8360f;
   --accent-ink: #ffffff;
   --accent-soft: #fdeee5;
-  --secondary: #6252bd;
-  --secondary-soft: #ece9fb;
+  --shadow: 0 14px 30px rgba(120, 72, 48, 0.08);
+  --shadow-sm: 0 6px 16px rgba(120, 72, 48, 0.1);
 
-  --font-sans: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-hand: 'Caveat', cursive;
+  --font-display: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-sans: 'Nunito Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-hand: 'Caveat', 'Segoe Script', cursive;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
 
-  --max-w: 68rem;
+  --max-w: 70rem;
   --nav-h: 3.5rem;
-  --radius: 1rem;
-  --radius-s: 0.65rem;
-  --gap-section: 3rem;
+  --radius: 1.25rem;
+  --radius-s: 0.9rem;
+  --gap-section: 4rem;
 }
 
 *,
@@ -35,15 +38,29 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-h);
 }
 
 body {
   margin: 0;
-  background: var(--bg);
+  background-color: var(--bg);
   color: var(--ink);
   font-family: var(--font-sans);
-  line-height: 1.65;
+  line-height: 1.6;
   overflow-x: hidden;
+  touch-action: manipulation;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
 }
 
 main {
@@ -58,9 +75,8 @@ section[id] {
 }
 
 section > h2 {
-  font-size: 1.6rem;
+  font-size: 1.75rem;
   margin: 0 0 0.25rem;
-  letter-spacing: -0.01em;
 }
 
 .section-sub {
@@ -69,29 +85,45 @@ section > h2 {
   max-width: 44rem;
 }
 
-.handnote {
-  font-family: var(--font-hand);
-  font-weight: 500;
-  font-size: 1.35rem;
-  color: var(--muted);
-  transform: rotate(-2deg);
-  display: inline-block;
+::selection {
+  background: var(--accent-soft);
 }
 
 a {
   color: var(--accent-strong);
 }
 
+a:not(.button):not(.connect):hover {
+  text-decoration: underline;
+}
+
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid var(--accent-strong);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 .tag {
-  font-size: 0.8rem;
-  font-weight: 700;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* Soft, friendly elevation for the main surface cards. */
+.featured-card,
+.tiles,
+.card,
+.quote,
+.stat,
+.cert a,
+.role,
+.archived {
+  box-shadow: var(--shadow);
+}
+
+.button.primary {
+  box-shadow: var(--shadow-sm);
 }
 
 .sr-only {

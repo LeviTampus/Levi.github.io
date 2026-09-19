@@ -1,0 +1,120 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import RecipeRow from '../components/RecipeRow.astro';
+import Button from '../components/Button.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) =>
+    Number(b.data.featured) - Number(a.data.featured) ||
+    a.data.order - b.data.order,
+);
+const recipes = (await getCollection('recipes')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const archiveItems = (await getCollection('archive')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const title = 'Projects — Levi Joan Tampus';
+const description =
+  'Professional and personal projects, Workato integrations, and archived work from Levi Joan Tampus.';
+const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
+---
+
+<Base title={title} description={description}>
+  <section id="projects" aria-label="Projects">
+    <h1>Projects</h1>
+    <p class="section-sub">
+      Professional and personal work — labeled honestly. The featured project is the deepest case study.
+    </p>
+    {projects.map(async (p) => {
+      const { Content } = await p.render();
+      return (
+        <ProjectCard project={p}>
+          <Content />
+        </ProjectCard>
+      );
+    })}
+  </section>
+
+  <section id="integrations" aria-label="Workato integrations">
+    <h2>Workato Integrations</h2>
+    <p class="section-sub">
+      A couple of integration and workflow builds. One is shared publicly; the other lives in Workato and needs a sign-in.
+    </p>
+    {recipes.map((r) => (
+      <RecipeRow recipe={r} />
+    ))}
+  </section>
+
+  <section id="archive" aria-label="Earlier and archived work">
+    <h2>From the archives</h2>
+    <p class="section-sub">
+      Older work that shows where I started — kept for context, not the main act.
+    </p>
+    {archiveItems.map(async (item) => {
+      const { Content } = await item.render();
+      return (
+        <article class="archived">
+          <p class="tag muted">Archived {item.data.period}</p>
+          <h3>{item.data.title}</h3>
+          <p>{item.data.context}</p>
+          <Content />
+          {item.data.links.playlist && (
+            <p>
+              <a href={item.data.links.playlist} target="_blank" rel="noopener noreferrer">
+                Watch the training playlist
+              </a>
+            </p>
+          )}
+        </article>
+      );
+    })}
+  </section>
+
+  <section id="contact" aria-label="Contact">
+    <h2>Want to talk about a project?</h2>
+    <p class="section-sub">
+      I'm always open to discussing integrations, support work, or new opportunities.
+    </p>
+    <p class="contact-actions">
+      <Button href="mailto:levijoantampus@gmail.com">Email me</Button>
+      <Button href={`${base}/certificates`} variant="secondary">View certificates</Button>
+    </p>
+  </section>
+</Base>
+
+<style>
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin: 0 0 0.5rem;
+  }
+
+  .archived {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    padding: 1.25rem 1.5rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .archived h3 {
+    color: var(--ink);
+    margin: 0.25rem 0 0.5rem;
+  }
+
+  .archived .muted {
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin: 0;
+  }
+</style>

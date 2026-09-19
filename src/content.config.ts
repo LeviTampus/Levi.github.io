@@ -24,7 +24,7 @@ const recipes = defineCollection({
   schema: z.object({
     title: z.string(),
     workatoUrl: z.string().url(),
-    access: z.literal('gated').default('gated'),
+    access: z.enum(['gated', 'public']).default('gated'),
     purpose: z.string().optional(),
     systems: z.array(z.string()).default([]),
     order: z.number().default(0),

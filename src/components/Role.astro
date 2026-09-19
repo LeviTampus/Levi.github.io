@@ -5,25 +5,30 @@ interface Props {
   dates: string;
   bullets: string[];
   variant?: 'current' | 'earlier';
+  compact?: boolean;
 }
 
-const { company, title, dates, bullets, variant = 'current' } = Astro.props;
+const { company, title, dates, bullets, variant = 'current', compact = false } = Astro.props;
 ---
-<article class={`role ${variant}`}>
+<article class={`role ${variant}${compact ? ' compact' : ''}`}>
   <header>
-    {variant === 'current' ? (
-      <p class="tag current-label">Current</p>
-    ) : (
-      <p class="tag earlier-label">Earlier experience</p>
+    {!compact && (
+      variant === 'current' ? (
+        <p class="tag current-label">Current</p>
+      ) : (
+        <p class="tag earlier-label">Earlier experience</p>
+      )
     )}
     <h3>{title} — {company}</h3>
     <p class="tag dates">{dates}</p>
   </header>
-  <ul>
-    {bullets.map((b) => (
-      <li>{b}</li>
-    ))}
-  </ul>
+  {!compact && (
+    <ul>
+      {bullets.map((b) => (
+        <li>{b}</li>
+      ))}
+    </ul>
+  )}
 </article>
 
 <style>
@@ -34,6 +39,11 @@ const { company, title, dates, bullets, variant = 'current' } = Astro.props;
     border-radius: var(--radius-s);
     padding: 1.25rem 1.5rem;
     margin-bottom: 1.25rem;
+  }
+
+  .role.compact {
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
   }
 
   .role h3 {
@@ -55,6 +65,10 @@ const { company, title, dates, bullets, variant = 'current' } = Astro.props;
     margin-bottom: 0;
   }
 
+  .role.compact.earlier {
+    margin-bottom: 0.75rem;
+  }
+
   .role.earlier h3 {
     font-size: 1rem;
     font-weight: 600;
@@ -74,6 +88,10 @@ const { company, title, dates, bullets, variant = 'current' } = Astro.props;
   .dates {
     margin: 0 0 0.75rem;
     color: var(--muted);
+  }
+
+  .compact .dates {
+    margin: 0;
   }
 
   .role ul {

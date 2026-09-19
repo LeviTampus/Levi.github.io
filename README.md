@@ -42,7 +42,7 @@ certificate, or role is a data-only change — no layout edits required.
 
 - `resume.pdf` and `design-preference.png` are local references and are
   intentionally git-ignored. Do not publish them.
-- The site is deployed as a GitHub project site. `base: '/portfolio-redesign'`
+- The site is deployed as a GitHub project site. `base: '/Levi.github.io'`
   in `astro.config.mjs` must match the final repository name.
 - Web fonts are loaded from Google Fonts; self-hosting is a possible future
   improvement.

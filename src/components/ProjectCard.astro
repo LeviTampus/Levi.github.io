@@ -36,7 +36,7 @@ const badge: Record<string, string> = {
   )}
   {(links.demo || links.repo || links.video) && (
     <p class="links">
-      {links.demo && <Button href={links.demo} external>Live demo →</Button>}
+      {links.demo && <Button href={links.demo} external>Live demo</Button>}
       {links.repo && (
         <a href={links.repo} target="_blank" rel="noopener noreferrer">Repository</a>
       )}
@@ -77,8 +77,9 @@ const badge: Record<string, string> = {
 
   .badge {
     display: inline-block;
-    color: var(--secondary);
-    background: var(--secondary-soft);
+    color: var(--muted);
+    background: var(--surface-tint);
+    border: 1px solid var(--border);
     border-radius: 999px;
     padding: 0.15rem 0.7rem;
     margin: 0;
@@ -113,10 +114,12 @@ const badge: Record<string, string> = {
   }
 
   .tech li {
-    background: var(--surface-tint);
+    background: transparent;
     border: 1px solid var(--border);
     border-radius: 999px;
     padding: 0.2rem 0.65rem;
+    color: var(--muted);
+    font-weight: 500;
   }
 
   .links {
