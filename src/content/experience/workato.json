@@ -1,0 +1,11 @@
+{
+  "company": "Workato",
+  "title": "Senior Support Analyst",
+  "dates": "2022 – Present",
+  "bullets": [
+    "Diagnose and resolve complex Level 2 cases across AI agents, integrations, and REST APIs, providing swift first-line diagnosis of live issues.",
+    "Reproduce ambiguous behaviors and drive root-cause analysis with SQL, OpenSearch logs, and API testing tools such as Postman.",
+    "Build and maintain Workato automations (Slackbot, Workato Genie) that streamline recurring support workflows and day-to-day troubleshooting.",
+    "Monitor AI-agent execution via Langfuse traces and author detailed Jira engineering escalations with reproduction steps, logs, and technical evidence."
+  ]
+}

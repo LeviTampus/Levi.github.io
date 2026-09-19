@@ -1,5 +1,17 @@
 ---
 import Base from '../layouts/Base.astro';
+import Role from '../components/Role.astro';
+import SkillGroup from '../components/SkillGroup.astro';
+import { getCollection } from 'astro:content';
+
+const ORDER = ['workato', 'earlier'];
+const experience = (await getCollection('experience')).sort(
+  (a, b) => ORDER.indexOf(a.slug) - ORDER.indexOf(b.slug),
+);
+
+const email = 'levijoantampus@gmail.com';
+const linkedin = 'https://www.linkedin.com/in/levi-joan-tampus-b431b8140/';
+const github = 'https://github.com/LeviTampus';
 ---
 
 <Base
@@ -7,20 +19,71 @@ import Base from '../layouts/Base.astro';
   description="Portfolio of Levi Joan Tampus: SaaS technical support, Workato integrations and APIs, workflow automation, troubleshooting, and AI agent projects."
 >
   <section id="hero" aria-label="Introduction">
+    <p class="tag">SaaS · Integrations · APIs · Automation · AI Agents</p>
     <h1>Levi Joan Tampus</h1>
-    <p>Integration, automation, and AI — hero content lands in P2.</p>
+    <p class="lede">
+      AI &amp; Technical Support Specialist with nearly 11 years of customer and
+      technical support experience, including 4 years in B2B SaaS and AI-agent
+      troubleshooting — now building hands-on software and AI engineering skills.
+    </p>
+    <p>
+      <a class="button" href="#projects">View projects</a>
+      <a class="button secondary" href="#contact">Get in touch</a>
+    </p>
   </section>
 
   <section id="summary" aria-label="Professional summary">
     <h2>Summary</h2>
+    <p>
+      I spent the last several years working in IT solving technical problems and
+      troubleshooting integrations — for the past 4 years focused on Workato and
+      enterprise integrations: building and troubleshooting integrations between
+      business systems, working with APIs, and resolving data and integration
+      issues across production environments.
+    </p>
+    <p>
+      I investigate ambiguous issues with SQL, OpenSearch logs, and API testing
+      tools — reproducing behaviors, finding root causes, and either resolving
+      them or escalating to Engineering with thorough technical evidence.
+      Along the way I progressed from Level 1 to Level 2 support and built
+      Slackbot and Workato Genie automations that streamline recurring support work.
+    </p>
+    <p>
+      I'm now expanding that experience into software and AI engineering, building
+      practical systems around APIs, automation, and AI agents.
+    </p>
   </section>
 
   <section id="skills" aria-label="Technical skills">
     <h2>Skills</h2>
+    <SkillGroup
+      title="AI & Automation"
+      items={['AI Agents', 'Workato AI Agent', 'Langfuse', 'Workflow Automation', 'Slackbot Automation']}
+    />
+    <SkillGroup
+      title="APIs & Integrations"
+      items={['REST APIs', 'Workato', 'API Troubleshooting', 'Postman', 'OAuth / Authentication', 'JSON', 'Webhooks', 'SaaS Integrations']}
+    />
+    <SkillGroup
+      title="Data & Diagnostics"
+      items={['SQL', 'OpenSearch', 'Snowflake', 'Oracle', 'Log Analysis', 'Issue Reproduction', 'Root-Cause Analysis', 'Technical Diagnosis']}
+    />
+    <SkillGroup
+      title="Technical Operations"
+      items={['Production Troubleshooting', 'Engineering Escalation', 'Technical Documentation', 'Jira', 'Freshdesk', 'Intercom']}
+    />
   </section>
 
   <section id="experience" aria-label="Professional experience">
     <h2>Experience</h2>
+    {experience.map((entry) => (
+      <Role
+        company={entry.data.company}
+        title={entry.data.title}
+        dates={entry.data.dates}
+        bullets={entry.data.bullets}
+      />
+    ))}
   </section>
 
   <section id="projects" aria-label="Featured projects">
@@ -41,5 +104,49 @@ import Base from '../layouts/Base.astro';
 
   <section id="contact" aria-label="Contact">
     <h2>Contact</h2>
+    <p>
+      The fastest way to reach me is email — I also keep my LinkedIn and GitHub
+      up to date.
+    </p>
+    <ul class="contact-links">
+      <li><a class="button" href={`mailto:${email}`}>{email}</a></li>
+      <li><a href={linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+      <li><a href={github} target="_blank" rel="noopener noreferrer">GitHub</a></li>
+    </ul>
+    <p class="tag">Cebu City, Philippines</p>
   </section>
 </Base>
+
+<style>
+  .lede {
+    font-size: 1.15rem;
+    max-width: 44rem;
+  }
+
+  .button {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: var(--radius);
+    padding: 0.6rem 1.25rem;
+    margin-right: 0.75rem;
+  }
+
+  .button.secondary {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+  }
+
+  .contact-links {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+</style>

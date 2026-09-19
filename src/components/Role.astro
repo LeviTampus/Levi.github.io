@@ -1,0 +1,47 @@
+---
+interface Props {
+  company: string;
+  title: string;
+  dates: string;
+  bullets: string[];
+}
+
+const { company, title, dates, bullets } = Astro.props;
+---
+<article class="role">
+  <header>
+    <h3>{title} — {company}</h3>
+    <p class="tag dates">{dates}</p>
+  </header>
+  <ul>
+    {bullets.map((b) => (
+      <li>{b}</li>
+    ))}
+  </ul>
+</article>
+
+<style>
+  .role {
+    border-left: 2px solid var(--accent);
+    padding-left: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .role h3 {
+    margin: 0 0 0.25rem;
+  }
+
+  .dates {
+    margin: 0 0 0.75rem;
+    color: var(--muted);
+  }
+
+  .role ul {
+    margin: 0;
+    padding-left: 1.25rem;
+  }
+
+  .role li + li {
+    margin-top: 0.5rem;
+  }
+</style>
