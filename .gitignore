@@ -1,0 +1,13 @@
+# PRIVATE — never commit the reference resume
+resume.pdf
+*.pdf
+!public/resume-public.pdf
+
+# Astro / Node
+node_modules/
+dist/
+.astro/
+
+# OS / editor
+.DS_Store
+Thumbs.db
