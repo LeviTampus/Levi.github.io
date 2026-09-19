@@ -66,4 +66,14 @@ const archive = defineCollection({
   }),
 });
 
-export const collections = { projects, recipes, certs, experience, archive };
+const recognition = defineCollection({
+  type: 'data',
+  schema: z.object({
+    title: z.string(),
+    context: z.string(),
+    asset: z.string().optional(),
+    status: z.enum(['placeholder', 'published']).default('placeholder'),
+  }),
+});
+
+export const collections = { projects, recipes, certs, experience, archive, recognition };

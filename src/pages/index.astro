@@ -17,6 +17,7 @@ const projects = (await getCollection('projects')).sort((a, b) =>
 const recipes = await getCollection('recipes');
 const archiveItems = await getCollection('archive');
 const certs = await getCollection('certs');
+const recognition = await getCollection('recognition');
 
 const email = 'levijoantampus@gmail.com';
 const linkedin = 'https://www.linkedin.com/in/levi-joan-tampus-b431b8140/';
@@ -92,6 +93,17 @@ const github = 'https://github.com/LeviTampus';
         dates={entry.data.dates}
         bullets={entry.data.bullets}
       />
+    ))}
+  </section>
+
+  <section id="recognition" aria-label="Recognition">
+    <h2>Recognition</h2>
+    {recognition.map((item) => (
+      <article class="archived">
+        <p class="tag muted">Coming soon</p>
+        <h3>{item.data.title}</h3>
+        <p>{item.data.context}</p>
+      </article>
     ))}
   </section>
 
