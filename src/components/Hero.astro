@@ -1,7 +1,7 @@
 ---
 import Button from './Button.astro';
 
-const heroSrc = `${import.meta.env.BASE_URL}/hero-illustration.jpg`;
+const heroSrc = `${import.meta.env.BASE_URL}/hero-illustration.webp`;
 ---
 <section id="hero" aria-label="Introduction" class="hero">
   <div class="hero-copy">
@@ -25,24 +25,29 @@ const heroSrc = `${import.meta.env.BASE_URL}/hero-illustration.jpg`;
     </p>
   </div>
 
-  <figure class="hero-art">
-    <img
-      src={heroSrc}
-      alt="Illustration of Levi holding a mug that reads “Good Systems Better Coffee”, beside a sleeping cat and a stack of books on APIs, automations, and AI agents"
-      width="360"
-      height="380"
-    />
-    <figcaption class="sr-only">Build, learn, break, repeat.</figcaption>
-  </figure>
+  <div class="hero-stage">
+    <span class="blob blob-a" aria-hidden="true"></span>
+    <span class="blob blob-b" aria-hidden="true"></span>
 
-  <span class="deco note-build handnote" aria-hidden="true">Build · Learn<br />Break · Repeat ♡</span>
-  <span class="deco note-curiosity handnote" aria-hidden="true">Same curiosity,<br />higher altitude ♡</span>
-  <svg class="deco spark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-    <path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z" fill="currentColor" />
-  </svg>
-  <svg class="deco heart" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-    <path d="M12 20s-7-4.6-7-9.5A4 4 0 0 1 12 7a4 4 0 0 1 7 3.5C19 15.4 12 20 12 20z" fill="currentColor" />
-  </svg>
+    <figure class="hero-art">
+      <img
+        src={heroSrc}
+        alt="Illustration of Levi smiling and holding a mug that reads “Good Systems Better Coffee”, with a sleeping cat beside her"
+        width="360"
+        height="380"
+      />
+      <figcaption class="sr-only">Build, learn, break, repeat.</figcaption>
+    </figure>
+
+    <span class="deco note-build handnote" aria-hidden="true">Build · Learn<br />Break · Repeat ♡</span>
+    <span class="deco note-curiosity handnote" aria-hidden="true">Same curiosity,<br />higher altitude ♡</span>
+    <svg class="deco spark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z" fill="currentColor" />
+    </svg>
+    <svg class="deco heart" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 20s-7-4.6-7-9.5A4 4 0 0 1 12 7a4 4 0 0 1 7 3.5C19 15.4 12 20 12 20z" fill="currentColor" />
+    </svg>
+  </div>
 </section>
 
 <style>
@@ -87,30 +92,51 @@ const heroSrc = `${import.meta.env.BASE_URL}/hero-illustration.jpg`;
   }
 
   .progression {
+    display: block;
     margin: 0;
     font-size: 1.15rem;
     color: var(--accent-strong);
   }
 
+  .hero-stage {
+    position: relative;
+    width: 100%;
+    justify-self: center;
+    padding: 0.5rem 0;
+    isolation: isolate;
+  }
+
+  /* Painted washes behind the illustration so it sits inside the page's warm
+     palette instead of floating on a flat background. */
+  .blob {
+    position: absolute;
+    z-index: 0;
+    border-radius: 52% 48% 55% 45% / 48% 54% 46% 52%;
+  }
+
+  .blob-a {
+    inset: 6% 6% 4% 4%;
+    background: radial-gradient(closest-side, #f6e2d1 56%, rgba(246, 226, 209, 0) 100%);
+  }
+
+  .blob-b {
+    inset: 20% -4% 0 22%;
+    transform: rotate(-7deg);
+    background: radial-gradient(closest-side, rgba(236, 233, 251, 0.9) 50%, rgba(236, 233, 251, 0) 100%);
+  }
+
   .hero-art {
     position: relative;
+    z-index: 1;
     margin: 0;
-    justify-self: center;
     width: 100%;
   }
 
-  /* The illustration is blended into the page, not framed in a card:
-     the warm background is multiplied into the cream page and the edges
-     are feathered so no rectangular boundary is visible. The mask centre
-     is offset left so the baked-in, cropped note on the right edge fades out. */
   .hero-art img {
     display: block;
-    width: min(100%, 30rem);
+    width: min(100%, 27rem);
     height: auto;
     margin: 0 auto;
-    mix-blend-mode: multiply;
-    -webkit-mask-image: radial-gradient(130% 120% at 36% 42%, #000 56%, transparent 82%);
-    mask-image: radial-gradient(130% 120% at 36% 42%, #000 56%, transparent 82%);
   }
 
   .deco {
@@ -119,6 +145,7 @@ const heroSrc = `${import.meta.env.BASE_URL}/hero-illustration.jpg`;
   }
 
   .note-build {
+    z-index: 2;
     top: 0;
     right: 0;
     text-align: right;
@@ -127,22 +154,25 @@ const heroSrc = `${import.meta.env.BASE_URL}/hero-illustration.jpg`;
   }
 
   .note-curiosity {
-    bottom: 0.5rem;
+    z-index: 2;
+    bottom: 0;
     left: 0;
     transform: rotate(-5deg);
   }
 
   .spark {
-    top: 42%;
-    right: 46%;
+    z-index: 2;
+    top: 36%;
+    right: 4%;
     width: 1.6rem;
     height: 1.6rem;
     color: var(--accent);
   }
 
   .heart {
-    bottom: 1.5rem;
-    right: 30%;
+    z-index: 2;
+    bottom: 18%;
+    left: 2%;
     width: 1.2rem;
     height: 1.2rem;
     color: var(--accent);
@@ -150,14 +180,15 @@ const heroSrc = `${import.meta.env.BASE_URL}/hero-illustration.jpg`;
 
   @media (max-width: 820px) {
     .hero {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .hero-art img {
       width: min(100%, 22rem);
     }
 
-    .deco {
+    .note-build,
+    .note-curiosity {
       display: none;
     }
 
