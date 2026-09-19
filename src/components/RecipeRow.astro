@@ -11,11 +11,7 @@ const { title, workatoUrl, purpose } = recipe.data;
 <article class="recipe">
   <div>
     <h3>{title}</h3>
-    {purpose === 'TBD' ? (
-      <p class="tag muted">Purpose: to be added.</p>
-    ) : (
-      <p>{purpose}</p>
-    )}
+    {purpose && <p>{purpose}</p>}
   </div>
   <a href={workatoUrl} target="_blank" rel="noopener noreferrer">
     View in Workato<span class="tag muted"> (requires sign-in)</span>

@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
 ---
 
 <Base
@@ -10,7 +11,7 @@ import Base from '../layouts/Base.astro';
     <h1>404 — Nothing here</h1>
     <p>The page you're looking for doesn't exist.</p>
     <p>
-      <a class="button" href={`${import.meta.env.BASE_URL}`}>Back to the portfolio</a>
+      <Button href={`${import.meta.env.BASE_URL}`}>Back to the portfolio</Button>
     </p>
   </section>
 </Base>
@@ -19,15 +20,5 @@ import Base from '../layouts/Base.astro';
   section {
     padding-top: 4rem;
     padding-bottom: 4rem;
-  }
-
-  .button {
-    display: inline-block;
-    background: var(--accent);
-    color: var(--accent-ink);
-    font-weight: 700;
-    text-decoration: none;
-    border-radius: var(--radius);
-    padding: 0.6rem 1.25rem;
   }
 </style>

@@ -2,6 +2,8 @@
   "company": "Workato",
   "title": "Senior Support Analyst",
   "dates": "2022 – Present",
+  "tier": "current",
+  "order": 1,
   "bullets": [
     "Diagnose and resolve complex Level 2 cases across AI agents, integrations, and REST APIs, providing swift first-line diagnosis of live issues.",
     "Reproduce ambiguous behaviors and drive root-cause analysis with SQL, OpenSearch logs, and API testing tools such as Postman.",

@@ -1,23 +1,24 @@
 /* Design tokens — "warm paper workshop" direction.
-   Cream foundation, ink text, coral primary, lavender secondary. */
+   Cream foundation, ink text, coral primary, lavender secondary.
+   --accent is the brand/decorative coral. --accent-strong is the
+   text/button-safe variant (>= 4.5:1 on cream and white). */
 
 :root {
   --bg: #fdf8f1;
   --surface: #ffffff;
   --surface-tint: #faf3e9;
   --ink: #22313b;
-  --muted: #6f7d87;
+  --muted: #5e6b75;
   --border: #eddfd0;
   --accent: #ef6339;
+  --accent-strong: #c2451f;
   --accent-ink: #ffffff;
   --accent-soft: #fdeee5;
-  --secondary: #7c6fd0;
+  --secondary: #6252bd;
   --secondary-soft: #ece9fb;
-  --heart: #e0506e;
 
   --font-sans: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-hand: 'Caveat', cursive;
-  --font-mono: ui-monospace, SFMono-Regular, monospace;
 
   --max-w: 68rem;
   --nav-h: 3.5rem;
@@ -42,6 +43,7 @@ body {
   color: var(--ink);
   font-family: var(--font-sans);
   line-height: 1.65;
+  overflow-x: hidden;
 }
 
 main {
@@ -69,6 +71,7 @@ section > h2 {
 
 .handnote {
   font-family: var(--font-hand);
+  font-weight: 500;
   font-size: 1.35rem;
   color: var(--muted);
   transform: rotate(-2deg);
@@ -76,11 +79,12 @@ section > h2 {
 }
 
 a {
-  color: var(--accent);
+  color: var(--accent-strong);
 }
 
-a:focus-visible {
-  outline: 2px solid var(--accent);
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent-strong);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -88,6 +92,24 @@ a:focus-visible {
 .tag {
   font-size: 0.8rem;
   font-weight: 700;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 760px) {
+  section[id] {
+    scroll-margin-top: 7rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

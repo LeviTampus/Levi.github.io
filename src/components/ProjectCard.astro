@@ -1,12 +1,13 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import Button from './Button.astro';
 
 interface Props {
   project: CollectionEntry<'projects'>;
 }
 
 const { project } = Astro.props;
-const { title, type, tagline, technologies, links, tbd } = project.data;
+const { title, type, tagline, technologies, links, featured } = project.data;
 
 const badge: Record<string, string> = {
   professional: 'Professional',
@@ -14,11 +15,14 @@ const badge: Record<string, string> = {
   learning: 'Learning',
 };
 ---
-<article class="card">
+<article class={`card${featured ? ' featured' : ''}`}>
   <header>
-    <p class="tag badge">{badge[type]}</p>
+    <p class="tags">
+      <span class="tag badge">{badge[type]}</span>
+      {featured && <span class="tag featured-tag">Featured</span>}
+    </p>
     <h3>{title}</h3>
-    <p>{tagline}</p>
+    <p class="tagline">{tagline}</p>
   </header>
   <div class="prose">
     <slot />
@@ -30,14 +34,9 @@ const badge: Record<string, string> = {
       ))}
     </ul>
   )}
-  {tbd.length > 0 && (
-    <p class="tag tbd-note">Details coming soon: {tbd.join(', ')}.</p>
-  )}
   {(links.demo || links.repo || links.video) && (
     <p class="links">
-      {links.demo && (
-        <a class="button small" href={links.demo} target="_blank" rel="noopener noreferrer">Live demo</a>
-      )}
+      {links.demo && <Button href={links.demo} external>Live demo →</Button>}
       {links.repo && (
         <a href={links.repo} target="_blank" rel="noopener noreferrer">Repository</a>
       )}
@@ -57,8 +56,23 @@ const badge: Record<string, string> = {
     margin-bottom: 1.5rem;
   }
 
+  .card.featured {
+    border-color: var(--accent);
+  }
+
   .card h3 {
     margin: 0.25rem 0 0.5rem;
+  }
+
+  .tagline {
+    margin: 0;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
   }
 
   .badge {
@@ -70,9 +84,23 @@ const badge: Record<string, string> = {
     margin: 0;
   }
 
-  .prose :global(h2) {
+  .featured-tag {
+    display: inline-block;
+    color: var(--accent-strong);
+    background: var(--accent-soft);
+    border-radius: 999px;
+    padding: 0.15rem 0.7rem;
+    margin: 0;
+  }
+
+  .prose :global(h4) {
     font-size: 1rem;
     margin: 1.25rem 0 0.5rem;
+  }
+
+  .prose :global(h5) {
+    font-size: 0.95rem;
+    margin: 1rem 0 0.4rem;
   }
 
   .tech {
@@ -91,23 +119,11 @@ const badge: Record<string, string> = {
     padding: 0.2rem 0.65rem;
   }
 
-  .tbd-note {
-    color: var(--muted);
-  }
-
   .links {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
     align-items: center;
-    margin-bottom: 0;
-  }
-
-  .button.small {
-    background: var(--accent);
-    color: var(--accent-ink);
-    font-weight: 700;
-    text-decoration: none;
-    border-radius: var(--radius);
-    padding: 0.4rem 0.9rem;
+    margin: 1.25rem 0 0;
   }
 </style>

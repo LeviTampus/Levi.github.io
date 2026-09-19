@@ -1,0 +1,33 @@
+---
+interface Props {
+  href: string;
+  variant?: 'primary' | 'secondary';
+  external?: boolean;
+}
+
+const { href, variant = 'primary', external = false } = Astro.props;
+const externalAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+---
+<a class={`button ${variant}`} href={href} {...externalAttrs}><slot /></a>
+
+<style>
+  .button {
+    display: inline-block;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: var(--radius);
+    padding: 0.6rem 1.25rem;
+    line-height: 1.4;
+  }
+
+  .button.primary {
+    background: var(--accent-strong);
+    color: var(--accent-ink);
+  }
+
+  .button.secondary {
+    background: transparent;
+    color: var(--accent-strong);
+    border: 1px solid var(--accent-strong);
+  }
+</style>

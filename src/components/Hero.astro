@@ -1,0 +1,168 @@
+---
+import Button from './Button.astro';
+
+const heroSrc = `${import.meta.env.BASE_URL}/hero-illustration.jpg`;
+---
+<section id="hero" aria-label="Introduction" class="hero">
+  <div class="hero-copy">
+    <p class="hey"><span aria-hidden="true">👋</span> Hey, I'm</p>
+    <h1><span class="name">Levi Joan Tampus</span></h1>
+    <p class="lede">
+      Technical support and integrations specialist with 11 years of
+      experience — currently at Workato, where I troubleshoot integrations and
+      APIs, automate workflows, and build with AI agents.
+    </p>
+    <p class="lede personal">
+      I like figuring out why things break, how systems connect, and what
+      happens when you give those systems a little intelligence.
+    </p>
+    <p class="cta">
+      <Button href="#projects">View projects →</Button>
+      <Button href="#contact" variant="secondary">Get in touch</Button>
+    </p>
+    <p class="progression handnote">
+      Support → Integrations → APIs → Automation → Troubleshooting → AI
+    </p>
+  </div>
+
+  <figure class="hero-art">
+    <img
+      src={heroSrc}
+      alt="Illustration of Levi holding a mug that reads “Good Systems Better Coffee”, beside a sleeping cat and a stack of books on APIs, automations, and AI agents"
+      width="360"
+      height="380"
+    />
+    <figcaption class="sr-only">Build, learn, break, repeat.</figcaption>
+  </figure>
+
+  <span class="deco note-build handnote" aria-hidden="true">Build · Learn<br />Break · Repeat ♡</span>
+  <span class="deco note-curiosity handnote" aria-hidden="true">Same curiosity,<br />higher altitude ♡</span>
+  <svg class="deco spark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z" fill="currentColor" />
+  </svg>
+  <svg class="deco heart" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path d="M12 20s-7-4.6-7-9.5A4 4 0 0 1 12 7a4 4 0 0 1 7 3.5C19 15.4 12 20 12 20z" fill="currentColor" />
+  </svg>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 1.5rem 2rem;
+    align-items: center;
+  }
+
+  .hey {
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
+  h1 {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    line-height: 1.1;
+    margin: 0.25rem 0 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .name {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 0.12em;
+    text-underline-offset: 0.15em;
+  }
+
+  .lede {
+    font-size: 1.15rem;
+    max-width: 44rem;
+  }
+
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .progression {
+    margin: 0;
+    font-size: 1.15rem;
+    color: var(--accent-strong);
+  }
+
+  .hero-art {
+    position: relative;
+    margin: 0;
+    justify-self: center;
+    width: 100%;
+  }
+
+  /* The illustration is blended into the page, not framed in a card:
+     the warm background is multiplied into the cream page and the edges
+     are feathered so no rectangular boundary is visible. The mask centre
+     is offset left so the baked-in, cropped note on the right edge fades out. */
+  .hero-art img {
+    display: block;
+    width: min(100%, 30rem);
+    height: auto;
+    margin: 0 auto;
+    mix-blend-mode: multiply;
+    -webkit-mask-image: radial-gradient(130% 120% at 36% 42%, #000 56%, transparent 82%);
+    mask-image: radial-gradient(130% 120% at 36% 42%, #000 56%, transparent 82%);
+  }
+
+  .deco {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .note-build {
+    top: 0;
+    right: 0;
+    text-align: right;
+    font-size: 1.5rem;
+    transform: rotate(5deg);
+  }
+
+  .note-curiosity {
+    bottom: 0.5rem;
+    left: 0;
+    transform: rotate(-5deg);
+  }
+
+  .spark {
+    top: 42%;
+    right: 46%;
+    width: 1.6rem;
+    height: 1.6rem;
+    color: var(--accent);
+  }
+
+  .heart {
+    bottom: 1.5rem;
+    right: 30%;
+    width: 1.2rem;
+    height: 1.2rem;
+    color: var(--accent);
+  }
+
+  @media (max-width: 820px) {
+    .hero {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-art img {
+      width: min(100%, 22rem);
+    }
+
+    .deco {
+      display: none;
+    }
+
+    .progression {
+      font-size: 1.05rem;
+    }
+  }
+</style>

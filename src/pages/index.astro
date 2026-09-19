@@ -1,136 +1,103 @@
 ---
 import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
 import Role from '../components/Role.astro';
-import SkillGroup from '../components/SkillGroup.astro';
+import SkillTiles from '../components/SkillTiles.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import RecipeRow from '../components/RecipeRow.astro';
 import CertTile from '../components/CertTile.astro';
+import Button from '../components/Button.astro';
+import { site } from '../data/site';
 import { getCollection } from 'astro:content';
 
-const ORDER = ['workato', 'earlier'];
 const experience = (await getCollection('experience')).sort(
-  (a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id),
+  (a, b) => a.data.order - b.data.order,
 );
-const projects = (await getCollection('projects')).sort((a, b) =>
-  a.slug.localeCompare(b.slug),
+const projects = (await getCollection('projects')).sort(
+  (a, b) => a.data.order - b.data.order,
 );
-const recipes = await getCollection('recipes');
-const archiveItems = await getCollection('archive');
+const recipes = (await getCollection('recipes')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const archiveItems = (await getCollection('archive')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
 const certs = await getCollection('certs');
-const recognition = await getCollection('recognition');
+const recognition = (await getCollection('recognition')).filter(
+  (item) => item.data.status === 'published',
+);
 
-const email = 'levijoantampus@gmail.com';
-const linkedin = 'https://www.linkedin.com/in/levi-joan-tampus-b431b8140/';
-const github = 'https://github.com/LeviTampus';
+const title = 'Levi Joan Tampus — Technical Support, Integrations & AI';
+const description =
+  'Portfolio of Levi Joan Tampus: 11 years in technical support, Workato integrations and APIs, workflow automation, production troubleshooting, and AI agent projects.';
 ---
 
-<Base
-  title="Levi Joan Tampus — Integration, Automation & AI"
-  description="Portfolio of Levi Joan Tampus: SaaS technical support, Workato integrations and APIs, workflow automation, troubleshooting, and AI agent projects."
->
-  <section id="hero" aria-label="Introduction">
-    <div class="hero-grid">
-      <div>
-        <p class="hey"><span aria-hidden="true">👋</span> Hey, I'm</p>
-        <h1>Levi Joan <span class="underline">Tampus</span></h1>
-        <p class="lede">
-          AI &amp; Technical Support Specialist with 11 years of experience,
-          currently at Workato.
-        </p>
-        <p class="lede personal">
-          I like figuring out why things break, how systems connect, and what
-          happens when you give those systems a little intelligence.
-        </p>
-        <p>
-          <a class="button" href="#projects">View projects →</a>
-          <a class="button secondary" href="#contact">Get in touch</a>
-        </p>
-      </div>
-      <figure class="hero-art">
-        <img
-          src={`${import.meta.env.BASE_URL}/hero-illustration.jpg`}
-          alt="Cozy illustration of Levi with coffee, watched over by a cat, beside books on APIs, automations, and AI agents"
-          width="640"
-        />
-        <figcaption class="handnote">Build · Learn · Break · Repeat ♡</figcaption>
-      </figure>
-    </div>
-  </section>
+<Base title={title} description={description}>
+  <Hero />
 
   <section id="summary" aria-label="Professional summary">
-    <h2><span aria-hidden="true">👋</span> A quick intro</h2>
+    <h2>A quick intro</h2>
     <p>
-      I spent the last several years working in IT solving technical problems and
-      troubleshooting integrations — for the past 4 years focused on Workato and
-      enterprise integrations: building and troubleshooting integrations between
-      business systems, working with APIs, and resolving data and integration
-      issues across production environments.
+      I've spent 11 years in customer and technical support. For the last four,
+      at Workato, I've worked on enterprise integrations — building and
+      troubleshooting connections between business systems, working with APIs,
+      and resolving data and integration issues in production.
     </p>
     <p>
-      My favorite kind of work starts with "this should be working, but it isn't."
-      I reproduce it, dig through logs and API behavior until I find the real cause,
-      then fix it or hand Engineering an escalation they can act on immediately.
-      Somewhere along the way I went from Level 1 to Level 2 support — and started
-      automating the repetitive parts with Slackbot and Workato Genie.
+      My favorite kind of work starts with "this should be working, but it
+      isn't." I reproduce it, dig through logs and API behavior until I find the
+      real cause, then fix it or hand Engineering an escalation they can act on
+      immediately. Somewhere along the way I went from Level 1 to Level 2
+      support — and started automating the repetitive parts with Slackbot and
+      Workato Genie.
     </p>
     <p>
-      These days I'm expanding into software and AI engineering, building practical
-      systems around APIs, automation, and AI agents. This site is where I keep
-      the things I've built and learned. <span class="handnote">Same curiosity, higher altitude ♡</span>
+      These days I'm building on that foundation, expanding into software and AI
+      application engineering and building practical systems around APIs,
+      automation, and AI agents. This site is where I keep the things I've built
+      and learned. <span class="handnote">Same curiosity, higher altitude ♡</span>
     </p>
   </section>
 
-  <section id="skills" aria-label="Technical skills">
-    <h2><span aria-hidden="true">🧩</span> What I work with</h2>
-    <p class="section-sub">From integrations and APIs to AI agents — the tools I reach for most.</p>
-    <SkillGroup
-      title="🤖 AI & Automation"
-      items={['AI Agents', 'Workato AI Agent', 'Langfuse', 'Workflow Automation', 'Slackbot Automation']}
-    />
-    <SkillGroup
-      title="🔌 APIs & Integrations"
-      items={['REST APIs', 'Workato', 'API Troubleshooting', 'Postman', 'OAuth / Authentication', 'JSON', 'Webhooks', 'SaaS Integrations']}
-    />
-    <SkillGroup
-      title="🔍 Data & Diagnostics"
-      items={['SQL', 'OpenSearch', 'Snowflake', 'Oracle', 'Log Analysis', 'Issue Reproduction', 'Root-Cause Analysis', 'Technical Diagnosis']}
-    />
-    <SkillGroup
-      title="🛠️ Technical Operations"
-      items={['Production Troubleshooting', 'Engineering Escalation', 'Technical Documentation', 'Jira', 'Freshdesk', 'Intercom']}
-    />
-    <p><span class="handnote">Tools change, curiosity stays ♡</span></p>
+  <section id="skills" aria-label="Technical capabilities">
+    <h2>What I work with</h2>
+    <p class="section-sub">
+      Capability areas built over 11 years of support and integrations — from
+      connecting business systems to applying AI to real support problems.
+    </p>
+    <SkillTiles />
   </section>
 
   <section id="experience" aria-label="Professional experience">
-    <h2><span aria-hidden="true">💼</span> Where I've worked</h2>
+    <h2>Where I've worked</h2>
     <p class="section-sub">Support → integrations → automation → AI. The short version of 11 years.</p>
-    {experience.map((entry, i) => (
+    {experience.map((entry) => (
       <Role
         company={entry.data.company}
         title={entry.data.title}
         dates={entry.data.dates}
         bullets={entry.data.bullets}
-        variant={i === 0 ? 'current' : 'earlier'}
+        variant={entry.data.tier}
       />
     ))}
   </section>
 
-  <section id="recognition" aria-label="Recognition">
-    <h2><span aria-hidden="true">🌟</span> Kind words</h2>
-    <p class="section-sub">Feedback and kudos collected along the way.</p>
-    {recognition.map((item) => (
-      <article class="archived">
-        <p class="tag muted">Coming soon</p>
-        <h3>{item.data.title}</h3>
-        <p>{item.data.context}</p>
-      </article>
-    ))}
-  </section>
+  {recognition.length > 0 && (
+    <section id="recognition" aria-label="Recognition">
+      <h2>Kind words</h2>
+      <p class="section-sub">Feedback and kudos collected along the way.</p>
+      {recognition.map((item) => (
+        <article class="archived">
+          <h3>{item.data.title}</h3>
+          <p>{item.data.context}</p>
+        </article>
+      ))}
+    </section>
+  )}
 
   <section id="projects" aria-label="Featured projects">
-    <h2><span aria-hidden="true">🤖</span> Things I've built</h2>
-    <p class="section-sub">Personal experiments and professional work — labeled honestly, newest curiosity first.</p>
+    <h2>Things I've built</h2>
+    <p class="section-sub">Professional and personal work — labeled honestly. The featured one is the deepest case study.</p>
     {projects.map(async (p) => {
       const { Content } = await p.render();
       return (
@@ -142,15 +109,15 @@ const github = 'https://github.com/LeviTampus';
   </section>
 
   <section id="recipes" aria-label="Workato recipes and workflow examples">
-    <h2><span aria-hidden="true">⚙️</span> Workato recipes</h2>
-    <p class="section-sub">Real integration and workflow examples. They live in Workato, so you'll need a sign-in to peek inside.</p>
+    <h2>Workato recipes</h2>
+    <p class="section-sub">A couple of integration and workflow builds. They live in Workato, so you'll need a sign-in to look inside.</p>
     {recipes.map((r) => (
       <RecipeRow recipe={r} />
     ))}
   </section>
 
   <section id="archive" aria-label="Earlier and archived work">
-    <h2><span aria-hidden="true">📼</span> From the archives</h2>
+    <h2>From the archives</h2>
     <p class="section-sub">Older work that shows where I started — kept for context, not the main act.</p>
     {archiveItems.map(async (item) => {
       const { Content } = await item.render();
@@ -173,7 +140,7 @@ const github = 'https://github.com/LeviTampus';
   </section>
 
   <section id="certifications" aria-label="Certifications">
-    <h2><span aria-hidden="true">🏅</span> Certificates</h2>
+    <h2>Certifications</h2>
     <p class="section-sub">Coursework I'm happy to show — each tile links to its verification page.</p>
     <div class="cert-grid">
       {certs.map((c) => (
@@ -183,14 +150,14 @@ const github = 'https://github.com/LeviTampus';
   </section>
 
   <section id="contact" aria-label="Contact">
-    <h2><span aria-hidden="true">✉️</span> Say hello</h2>
+    <h2>Say hello</h2>
     <p class="section-sub">Something here catch your interest? My inbox is open.</p>
     <ul class="contact-links">
-      <li><a class="button" href={`mailto:${email}`}>{email}</a></li>
-      <li><a href={linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-      <li><a href={github} target="_blank" rel="noopener noreferrer">GitHub</a></li>
+      <li><Button href={`mailto:${site.email}`}>{site.email}</Button></li>
+      <li><a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+      <li><a href={site.github} target="_blank" rel="noopener noreferrer">GitHub</a></li>
     </ul>
-    <p class="tag">Cebu City, Philippines</p>
+    <p class="tag">{site.location}</p>
   </section>
 
   <aside class="quote" aria-label="Personal motto">
@@ -200,87 +167,6 @@ const github = 'https://github.com/LeviTampus';
 </Base>
 
 <style>
-  .hero-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 2rem;
-    align-items: center;
-  }
-
-  @media (max-width: 720px) {
-    .hero-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .hey {
-    font-weight: 800;
-    font-size: 1.1rem;
-    margin: 0;
-  }
-
-  #hero h1 {
-    font-size: clamp(2.2rem, 5vw, 3.2rem);
-    line-height: 1.1;
-    margin: 0.25rem 0 1rem;
-    letter-spacing: -0.02em;
-  }
-
-  .underline {
-    text-decoration: underline;
-    text-decoration-color: var(--accent);
-    text-decoration-thickness: 0.12em;
-    text-underline-offset: 0.15em;
-  }
-
-  .hero-art {
-    margin: 0;
-    text-align: center;
-  }
-
-  .hero-art img {
-    width: 100%;
-    max-width: 22rem;
-    height: auto;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-  }
-
-  .hero-art figcaption {
-    margin-top: 0.5rem;
-  }
-  .lede {
-    font-size: 1.15rem;
-    max-width: 44rem;
-  }
-
-  .button {
-    display: inline-block;
-    background: var(--accent);
-    color: var(--accent-ink);
-    font-weight: 700;
-    text-decoration: none;
-    border-radius: var(--radius);
-    padding: 0.6rem 1.25rem;
-    margin-right: 0.75rem;
-  }
-
-  .button.secondary {
-    background: transparent;
-    color: var(--accent);
-    border: 1px solid var(--accent);
-  }
-
-  .contact-links {
-    list-style: none;
-    margin: 0 0 1rem;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    align-items: center;
-  }
-
   .archived {
     border: 1px dashed var(--border);
     border-radius: var(--radius);
@@ -302,6 +188,16 @@ const github = 'https://github.com/LeviTampus';
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
     gap: 1rem;
+  }
+
+  .contact-links {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
   }
 
   .quote {

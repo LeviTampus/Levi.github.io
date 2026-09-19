@@ -1,6 +1,7 @@
 ---
 import '../styles/tokens.css';
 import SectionNav from '../components/SectionNav.astro';
+import Footer from '../components/Footer.astro';
 
 interface Props {
   title: string;
@@ -43,19 +44,6 @@ const canonical = `${site}${base}/`;
     <main>
       <slot />
     </main>
-    <footer>
-      <p>Levi Joan Tampus — Cebu City, Philippines</p>
-    </footer>
+    <Footer />
   </body>
 </html>
-
-<style>
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 2rem 1.25rem;
-    text-align: center;
-    color: var(--muted);
-    font-size: 0.9rem;
-    background: var(--surface);
-  }
-</style>

@@ -7,7 +7,6 @@ const projects = defineCollection({
     type: z.enum(['professional', 'personal', 'learning']),
     tagline: z.string(),
     technologies: z.array(z.string()).default([]),
-    tags: z.array(z.string()).default([]),
     links: z
       .object({
         repo: z.string().url().optional(),
@@ -15,8 +14,8 @@ const projects = defineCollection({
         video: z.string().url().optional(),
       })
       .default({}),
-    // Names of case-study fields intentionally left TBD (e.g. Genie demo).
-    tbd: z.array(z.string()).default([]),
+    featured: z.boolean().default(false),
+    order: z.number().default(0),
   }),
 });
 
@@ -25,9 +24,10 @@ const recipes = defineCollection({
   schema: z.object({
     title: z.string(),
     workatoUrl: z.string().url(),
-    access: z.literal('gated'),
-    purpose: z.string().default('TBD'),
+    access: z.literal('gated').default('gated'),
+    purpose: z.string().optional(),
     systems: z.array(z.string()).default([]),
+    order: z.number().default(0),
   }),
 });
 
@@ -38,7 +38,7 @@ const certs = defineCollection({
     issuer: z.string(),
     verifyUrl: z.string().url(),
     asset: z.string(),
-    status: z.enum(['verified', 'updating']).default('verified'),
+    order: z.number().default(0),
   }),
 });
 
@@ -49,6 +49,8 @@ const experience = defineCollection({
     title: z.string(),
     dates: z.string(),
     bullets: z.array(z.string()),
+    tier: z.enum(['current', 'earlier']),
+    order: z.number().default(0),
   }),
 });
 
@@ -63,9 +65,11 @@ const archive = defineCollection({
         playlist: z.string().url().optional(),
       })
       .default({}),
+    order: z.number().default(0),
   }),
 });
 
+// Reserved for future recognition/kudos content. Rendered only when published.
 const recognition = defineCollection({
   type: 'data',
   schema: z.object({
