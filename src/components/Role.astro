@@ -28,9 +28,12 @@ const { company, title, dates, bullets, variant = 'current' } = Astro.props;
 
 <style>
   .role {
-    border-left: 2px solid var(--accent);
-    padding-left: 1.25rem;
-    margin-bottom: 2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius-s);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.25rem;
   }
 
   .role h3 {
@@ -48,6 +51,7 @@ const { company, title, dates, bullets, variant = 'current' } = Astro.props;
 
   .role.earlier {
     border-left-color: var(--border);
+    background: var(--surface-tint);
     margin-bottom: 0;
   }
 

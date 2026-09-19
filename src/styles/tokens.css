@@ -1,22 +1,29 @@
-/* Design tokens — single source of truth for color, type, and spacing. */
+/* Design tokens — "warm paper workshop" direction.
+   Cream foundation, ink text, coral primary, lavender secondary. */
 
 :root {
-  --bg: #0f1417;
-  --surface: #172023;
-  --surface-raised: #1e2b30;
-  --muted: #8ba0aa;
-  --text: #e8eef0;
-  --accent: #4cc2a8;
-  --accent-ink: #06281f;
-  --border: #2a3a41;
+  --bg: #fdf8f1;
+  --surface: #ffffff;
+  --surface-tint: #faf3e9;
+  --ink: #22313b;
+  --muted: #6f7d87;
+  --border: #eddfd0;
+  --accent: #ef6339;
+  --accent-ink: #ffffff;
+  --accent-soft: #fdeee5;
+  --secondary: #7c6fd0;
+  --secondary-soft: #ece9fb;
+  --heart: #e0506e;
 
-  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  --font-sans: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-hand: 'Caveat', cursive;
+  --font-mono: ui-monospace, SFMono-Regular, monospace;
 
   --max-w: 68rem;
   --nav-h: 3.5rem;
-  --radius: 0.5rem;
-  --gap-section: 4rem;
+  --radius: 1rem;
+  --radius-s: 0.65rem;
+  --gap-section: 3rem;
 }
 
 *,
@@ -32,9 +39,9 @@ html {
 body {
   margin: 0;
   background: var(--bg);
-  color: var(--text);
+  color: var(--ink);
   font-family: var(--font-sans);
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 main {
@@ -48,6 +55,26 @@ section[id] {
   padding-top: var(--gap-section);
 }
 
+section > h2 {
+  font-size: 1.6rem;
+  margin: 0 0 0.25rem;
+  letter-spacing: -0.01em;
+}
+
+.section-sub {
+  color: var(--muted);
+  margin: 0 0 1.5rem;
+  max-width: 44rem;
+}
+
+.handnote {
+  font-family: var(--font-hand);
+  font-size: 1.35rem;
+  color: var(--muted);
+  transform: rotate(-2deg);
+  display: inline-block;
+}
+
 a {
   color: var(--accent);
 }
@@ -55,12 +82,12 @@ a {
 a:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 .tag {
-  font-family: var(--font-mono);
   font-size: 0.8rem;
+  font-weight: 700;
 }
 
 @media (prefers-reduced-motion: reduce) {
