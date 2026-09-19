@@ -3,6 +3,8 @@ import Base from '../layouts/Base.astro';
 import Role from '../components/Role.astro';
 import SkillGroup from '../components/SkillGroup.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import RecipeRow from '../components/RecipeRow.astro';
+import CertTile from '../components/CertTile.astro';
 import { getCollection } from 'astro:content';
 
 const ORDER = ['workato', 'earlier'];
@@ -12,6 +14,9 @@ const experience = (await getCollection('experience')).sort(
 const projects = (await getCollection('projects')).sort((a, b) =>
   a.slug.localeCompare(b.slug),
 );
+const recipes = await getCollection('recipes');
+const archiveItems = await getCollection('archive');
+const certs = await getCollection('certs');
 
 const email = 'levijoantampus@gmail.com';
 const linkedin = 'https://www.linkedin.com/in/levi-joan-tampus-b431b8140/';
@@ -104,14 +109,41 @@ const github = 'https://github.com/LeviTampus';
 
   <section id="recipes" aria-label="Workato recipes and workflow examples">
     <h2>Workato Recipes</h2>
+    <p>Integration and workflow examples. Recipe pages live in Workato and require sign-in.</p>
+    {recipes.map((r) => (
+      <RecipeRow recipe={r} />
+    ))}
   </section>
 
   <section id="archive" aria-label="Earlier and archived work">
     <h2>Earlier Work</h2>
+    {archiveItems.map(async (item) => {
+      const { Content } = await item.render();
+      return (
+        <article class="archived">
+          <p class="tag muted">Archived · {item.data.period}</p>
+          <h3>{item.data.title}</h3>
+          <p>{item.data.context}</p>
+          <Content />
+          {item.data.links.playlist && (
+            <p>
+              <a href={item.data.links.playlist} target="_blank" rel="noopener noreferrer">
+                Watch the training playlist
+              </a>
+            </p>
+          )}
+        </article>
+      );
+    })}
   </section>
 
   <section id="certifications" aria-label="Certifications">
     <h2>Certifications</h2>
+    <div class="cert-grid">
+      {certs.map((c) => (
+        <CertTile cert={c} />
+      ))}
+    </div>
   </section>
 
   <section id="contact" aria-label="Contact">
@@ -160,5 +192,28 @@ const github = 'https://github.com/LeviTampus';
     flex-wrap: wrap;
     gap: 0.75rem;
     align-items: center;
+  }
+
+  .archived {
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    color: var(--muted);
+  }
+
+  .archived h3 {
+    color: var(--text);
+    margin: 0.25rem 0 0.5rem;
+  }
+
+  .archived .muted {
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: 1rem;
   }
 </style>

@@ -1,0 +1,48 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  cert: CollectionEntry<'certs'>;
+}
+
+const { cert } = Astro.props;
+const { title, issuer, verifyUrl, asset } = cert.data;
+---
+<article class="cert">
+  <a href={verifyUrl} target="_blank" rel="noopener noreferrer">
+    <img src={`${import.meta.env.BASE_URL}certs/${asset}`} alt={`Certificate: ${title} (${issuer})`} loading="lazy" width="900" />
+    <h3>{title}</h3>
+    <p class="tag issuer">{issuer} · Verify</p>
+  </a>
+</article>
+
+<style>
+  .cert a {
+    display: block;
+    color: var(--text);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    overflow: hidden;
+  }
+
+  .cert img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cert h3 {
+    font-size: 0.95rem;
+    margin: 0.75rem 0.9rem 0.15rem;
+  }
+
+  .issuer {
+    margin: 0 0.9rem 0.8rem;
+    color: var(--muted);
+  }
+</style>

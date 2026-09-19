@@ -52,4 +52,18 @@ const experience = defineCollection({
   }),
 });
 
-export const collections = { projects, recipes, certs, experience };
+const archive = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    period: z.string(),
+    context: z.string(),
+    links: z
+      .object({
+        playlist: z.string().url().optional(),
+      })
+      .default({}),
+  }),
+});
+
+export const collections = { projects, recipes, certs, experience, archive };

@@ -1,0 +1,48 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  recipe: CollectionEntry<'recipes'>;
+}
+
+const { recipe } = Astro.props;
+const { title, workatoUrl, purpose } = recipe.data;
+---
+<article class="recipe">
+  <div>
+    <h3>{title}</h3>
+    {purpose === 'TBD' ? (
+      <p class="tag muted">Purpose: to be added.</p>
+    ) : (
+      <p>{purpose}</p>
+    )}
+  </div>
+  <a href={workatoUrl} target="_blank" rel="noopener noreferrer">
+    View in Workato<span class="tag muted"> (requires sign-in)</span>
+  </a>
+</article>
+
+<style>
+  .recipe {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 0;
+  }
+
+  .recipe h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1.05rem;
+  }
+
+  .recipe p {
+    margin: 0;
+  }
+
+  .muted {
+    color: var(--muted);
+  }
+</style>
