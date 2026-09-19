@@ -21,7 +21,8 @@ const demoteHeadings = () => (tree) => {
 export default defineConfig({
   output: 'static',
   site: 'https://levitampus.github.io',
-  // Deployed as a GitHub project site; preserved until the deploy repo is final.
+  // Deployed as a GitHub project site at /Levi.github.io
+  // (repo: LeviTampus/Levi.github.io).
   base: '/Levi.github.io',
   integrations: [sitemap()],
   markdown: {

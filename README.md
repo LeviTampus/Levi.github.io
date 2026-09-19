@@ -1,4 +1,4 @@
-# portfolio-redesign
+# Levi.github.io
 
 Personal portfolio for Levi Joan Tampus — technical support, integrations,
 APIs, automation, troubleshooting, and AI applications.
