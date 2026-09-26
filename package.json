@@ -8,6 +8,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "typecheck": "astro check",
+    "test:e2e": "playwright test",
     "astro": "astro"
   },
   "dependencies": {
@@ -16,6 +17,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@astrojs/sitemap": "^3.7.4",
+    "@playwright/test": "^1.63.0",
     "typescript": "^5.9.0"
   }
 }

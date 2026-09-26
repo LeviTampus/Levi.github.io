@@ -16,6 +16,17 @@ const projects = defineCollection({
       .default({}),
     featured: z.boolean().default(false),
     order: z.number().default(0),
+    // Marks an entry as not-yet-started so cards can show a status note.
+    wip: z.boolean().default(false),
+    wipNote: z.string().optional(),
+    // Optional decorative panel for the featured card (e.g. an agent loop).
+    trace: z
+      .object({
+        title: z.string(),
+        status: z.string(),
+        steps: z.array(z.string()),
+      })
+      .optional(),
   }),
 });
 

@@ -7,7 +7,7 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { title, type, tagline, technologies, links, featured } = project.data;
+const { title, type, tagline, technologies, links, featured, wip, wipNote } = project.data;
 
 const badge: Record<string, string> = {
   professional: 'Professional',
@@ -20,13 +20,15 @@ const badge: Record<string, string> = {
     <p class="tags">
       <span class="tag badge">{badge[type]}</span>
       {featured && <span class="tag featured-tag">Featured</span>}
+      {wip && <span class="tag wip-tag">Work in progress</span>}
     </p>
-    <h3>{title}</h3>
+    <h2>{title}</h2>
     <p class="tagline">{tagline}</p>
   </header>
   <div class="prose">
     <slot />
   </div>
+  {wipNote && <p class="wip-note">{wipNote}</p>}
   {technologies.length > 0 && (
     <ul class="tech" aria-label="Technologies">
       {technologies.map((t) => (
@@ -60,7 +62,8 @@ const badge: Record<string, string> = {
     border-color: var(--accent);
   }
 
-  .card h3 {
+  .card h2 {
+    font-size: 1.17em;
     margin: 0.25rem 0 0.5rem;
   }
 
@@ -94,14 +97,34 @@ const badge: Record<string, string> = {
     margin: 0;
   }
 
-  .prose :global(h4) {
+  .wip-tag {
+    display: inline-block;
+    color: var(--muted);
+    background: var(--surface-tint);
+    border: 1px dashed var(--rule);
+    border-radius: 999px;
+    padding: 0.15rem 0.7rem;
+    margin: 0;
+    font-weight: 600;
+    font-size: 0.78rem;
+  }
+
+  .prose :global(h3) {
     font-size: 1rem;
     margin: 1.25rem 0 0.5rem;
   }
 
-  .prose :global(h5) {
+  .prose :global(h4) {
     font-size: 0.95rem;
     margin: 1rem 0 0.4rem;
+  }
+
+  .wip-note {
+    color: var(--muted);
+    font-size: 0.9rem;
+    border-left: 3px solid var(--rule);
+    padding-left: 0.75rem;
+    margin: 1rem 0 0;
   }
 
   .tech {

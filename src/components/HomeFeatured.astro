@@ -130,4 +130,11 @@ const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
       max-width: 40rem;
     }
   }
+
+  @media (pointer: coarse) {
+    .view-all {
+      padding-block: 0.65rem;
+      margin-block: -0.65rem;
+    }
+  }
 </style>

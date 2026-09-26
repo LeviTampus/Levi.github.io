@@ -7,7 +7,7 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { title, type, tagline, technologies, links, featured } = project.data;
+const { title, type, tagline, technologies, links, featured, trace } = project.data;
 const pills = technologies.slice(0, 4);
 
 const badge: Record<string, string> = {
@@ -15,16 +15,8 @@ const badge: Record<string, string> = {
   personal: 'Personal',
   learning: 'Learning',
 };
-
-const steps = [
-  'Trigger received',
-  'Fetch logs and payload',
-  'Call API endpoints',
-  'Retrieve help docs',
-  'Diagnose and write report',
-];
 ---
-<article class="featured-card">
+<article class={`featured-card${trace ? '' : ' no-trace'}`}>
   <div class="copy">
     <p class="tags">
       <span class="tag badge">{badge[type]}</span>
@@ -39,28 +31,34 @@ const steps = [
         ))}
       </ul>
     )}
-    {links.demo && (
+    {links.demo ? (
       <p class="links">
         <Button href={links.demo} external>Live demo</Button>
       </p>
-    )}
+    ) : links.repo ? (
+      <p class="links">
+        <Button href={links.repo} external>View on GitHub</Button>
+      </p>
+    ) : null}
   </div>
 
-  <div class="trace" aria-hidden="true">
-    <div class="trace-head">
-      <span class="trace-dot"></span>
-      <span class="trace-title">Diagnostic run</span>
-      <span class="trace-status">Resolved</span>
+  {trace && (
+    <div class="trace" aria-hidden="true">
+      <div class="trace-head">
+        <span class="trace-dot"></span>
+        <span class="trace-title">{trace.title}</span>
+        <span class="trace-status">{trace.status}</span>
+      </div>
+      <ol class="trace-steps">
+        {trace.steps.map((step, i) => (
+          <li>
+            <span class="trace-index">{String(i + 1).padStart(2, '0')}</span>
+            <span class="trace-label">{step}</span>
+          </li>
+        ))}
+      </ol>
     </div>
-    <ol class="trace-steps">
-      {steps.map((step, i) => (
-        <li>
-          <span class="trace-index">{String(i + 1).padStart(2, '0')}</span>
-          <span class="trace-label">{step}</span>
-        </li>
-      ))}
-    </ol>
-  </div>
+  )}
 </article>
 
 <style>
@@ -73,6 +71,10 @@ const steps = [
     border-radius: var(--radius);
     background: var(--surface);
     padding: 1.5rem;
+  }
+
+  .featured-card.no-trace {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .copy {
@@ -138,7 +140,7 @@ const steps = [
     margin: 0;
   }
 
-  /* Simplified diagnostic trace — replaces the old faux window mockup. */
+  /* Optional decorative trace panel (e.g. an agent loop). */
   .trace {
     border: 1px solid var(--border);
     border-radius: var(--radius-s);

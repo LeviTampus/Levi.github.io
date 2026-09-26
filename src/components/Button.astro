@@ -18,16 +18,20 @@ const externalAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' 
     border-radius: 999px;
     padding: 0.7rem 1.4rem;
     line-height: 1.4;
-    transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+    transition:
+      background-color 120ms ease-out,
+      border-color 120ms ease-out,
+      color 120ms ease-out,
+      transform 160ms ease-out;
+  }
+
+  .button:active {
+    transform: scale(0.97);
   }
 
   .button.primary {
     background: var(--accent-deep);
     color: var(--accent-ink);
-  }
-
-  .button.primary:hover {
-    background: var(--accent-strong);
   }
 
   .button.secondary {
@@ -36,8 +40,20 @@ const externalAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' 
     border: 1px solid var(--border);
   }
 
-  .button.secondary:hover {
-    border-color: var(--accent);
-    color: var(--accent-strong);
+  @media (hover: hover) and (pointer: fine) {
+    .button.primary:hover {
+      background: var(--accent-strong);
+    }
+
+    .button.secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent-strong);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .button:active {
+      transform: none;
+    }
   }
 </style>

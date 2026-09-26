@@ -10,7 +10,7 @@ const { title, issuer, verifyUrl, asset } = cert.data;
 const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
 ---
 <article class="cert">
-  <a href={verifyUrl} target="_blank" rel="noopener noreferrer">
+  <a class="cert-link" href={verifyUrl} target="_blank" rel="noopener noreferrer">
     <img
       src={`${base}/certs/${asset}`}
       alt={`Certificate: ${title} (${issuer})`}
@@ -18,7 +18,7 @@ const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
       width="900"
       height="563"
     />
-    <h3>{title}</h3>
+    <h2>{title}</h2>
     <p class="issuer">Verify at {issuer}</p>
   </a>
 </article>
@@ -32,6 +32,7 @@ const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
     border-radius: var(--radius);
     background: var(--surface);
     overflow: hidden;
+    transition: border-color 120ms ease;
   }
 
   .cert img {
@@ -43,13 +44,24 @@ const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
     border-bottom: 1px solid var(--border);
   }
 
-  .cert h3 {
+  .cert h2 {
     font-size: 0.95rem;
     margin: 0.75rem 0.9rem 0.15rem;
+    transition: color 120ms ease;
   }
 
   .issuer {
     margin: 0 0.9rem 0.8rem;
     color: var(--muted);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .cert a:hover {
+      border-color: var(--accent);
+    }
+
+    .cert a:hover h2 {
+      color: var(--accent-strong);
+    }
   }
 </style>

@@ -93,7 +93,7 @@ a {
   color: var(--accent-strong);
 }
 
-a:not(.button):not(.connect):hover {
+a:not(.button):not(.connect):not(.cert-link):hover {
   text-decoration: underline;
 }
 
