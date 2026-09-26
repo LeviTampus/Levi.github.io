@@ -30,13 +30,13 @@ framework.
 It manages an anime watchlist through chat. You can ask what's airing, search
 for a title, add it, log episodes watched, change its status, or remove it. For
 each message the agent picks a tool, and anything that changes the watchlist
-asks for a `y/n` confirmation before it runs.
+asks for a <code translate="no">y/n</code> confirmation before it runs.
 
 ## How it's built
 
 Plain Python with no external dependencies. The model replies with JSON naming
 a tool and its arguments; the program runs the matching function and feeds the
-result back until the model calls `finish`. It works with any OpenAI-compatible
+result back until the model calls <code translate="no">finish</code>. It works with any OpenAI-compatible
 endpoint — Ollama locally or Groq in the cloud — and pulls anime data from the
 Tenrai API. The model never executes code itself; the program decides what
 happens.

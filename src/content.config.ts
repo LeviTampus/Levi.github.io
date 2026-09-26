@@ -48,7 +48,13 @@ const certs = defineCollection({
     title: z.string(),
     issuer: z.string(),
     verifyUrl: z.string().url(),
+    // Overrides the default "Verify at {issuer}" line when the link points at
+    // something other than a verification page (e.g. the certificate itself).
+    verifyLabel: z.string().optional(),
     asset: z.string(),
+    // Intrinsic image size, used for the <img> width/height attributes.
+    width: z.number().default(900),
+    height: z.number().default(563),
     order: z.number().default(0),
   }),
 });

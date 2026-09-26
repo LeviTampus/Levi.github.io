@@ -2,5 +2,8 @@
   "title": "SQL and PostgreSQL: The Complete Developer's Guide",
   "issuer": "Udemy",
   "verifyUrl": "https://www.udemy.com/certificate/UC-c6ae27ad-af26-4cca-903a-027057ecd136/",
-  "asset": "udemy-sql-postgres.jpg"
+  "asset": "udemy-sql-postgres.jpg",
+  "width": 900,
+  "height": 669,
+  "order": 7
 }

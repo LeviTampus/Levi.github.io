@@ -2,5 +2,8 @@
   "title": "Intermediate SQL",
   "issuer": "DataCamp",
   "verifyUrl": "https://www.datacamp.com/statement-of-accomplishment/course/0d777fbe0e937f01a4a608ba5af0c2d30703ccfa",
-  "asset": "datacamp-intermediate-sql.jpg"
+  "asset": "datacamp-intermediate-sql.jpg",
+  "width": 900,
+  "height": 519,
+  "order": 3
 }

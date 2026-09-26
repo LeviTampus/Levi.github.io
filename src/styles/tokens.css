@@ -37,6 +37,7 @@
 }
 
 html {
+  color-scheme: light;
   scroll-behavior: smooth;
   scroll-padding-top: var(--nav-h);
 }
@@ -49,6 +50,7 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(239, 99, 64, 0.18);
 }
 
 h1,
@@ -139,6 +141,11 @@ button:focus-visible {
 }
 
 @media (max-width: 760px) {
+  html {
+    /* The nav wraps to two rows here, so keep focused/anchored targets clear of it. */
+    scroll-padding-top: 7rem;
+  }
+
   section[id] {
     scroll-margin-top: 7rem;
   }

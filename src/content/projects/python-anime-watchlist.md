@@ -25,8 +25,9 @@ and persists between runs.
 ## How it's built
 
 Python 3 with no external packages, using the Tenrai API for anime data. The
-same modules back both the command-line app (`main.py`) and an optional Tkinter
-window (`gui.py`), with the watchlist stored as JSON in `data/watchlist.json`.
+same modules back both the command-line app (<code translate="no">main.py</code>) and an optional Tkinter
+window (<code translate="no">gui.py</code>), with the watchlist stored as JSON in
+<code translate="no">data/watchlist.json</code>.
 
 ## Where it stands
 

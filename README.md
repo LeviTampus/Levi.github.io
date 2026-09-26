@@ -1,5 +1,8 @@
 # Levi.github.io
 
+**Live site:** https://levitampus.github.io/Levi.github.io/ — start here. This
+repository is the source; recruiters and visitors should land on the live site.
+
 Personal portfolio for Levi Joan Tampus — technical support, integrations,
 APIs, automation, troubleshooting, and AI applications.
 

@@ -2,5 +2,8 @@
   "title": "Reporting in SQL",
   "issuer": "DataCamp",
   "verifyUrl": "https://www.datacamp.com/statement-of-accomplishment/course/5db5aa1b8cdf0547c55aafca76baf61daa1a30c7",
-  "asset": "datacamp-reporting-sql.jpg"
+  "asset": "datacamp-reporting-sql.jpg",
+  "width": 900,
+  "height": 519,
+  "order": 4
 }

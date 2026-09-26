@@ -2,5 +2,8 @@
   "title": "Code Your Future With StackTrek: Python Workshop",
   "issuer": "StackTrek Enterprise, Inc.",
   "verifyUrl": "https://drive.google.com/file/d/1SNBiZc68DMG2JWcn3_W_C3emq-WP4vLp/view",
-  "asset": "stacktrek-python-workshop.jpg"
+  "asset": "stacktrek-python-workshop.jpg",
+  "width": 900,
+  "height": 696,
+  "order": 6
 }

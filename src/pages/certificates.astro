@@ -10,7 +10,7 @@ const certs = (await getCollection('certs')).sort(
 
 const title = 'Certificates — Levi Joan Tampus';
 const description =
-  'Coursework and certificates from Levi Joan Tampus — each tile links to its verification page.';
+  'Coursework and certificates from Levi Joan Tampus — each tile opens the certificate or its verification page.';
 const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
 ---
 
@@ -18,11 +18,11 @@ const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
   <section id="certificates" aria-label="Certificates">
     <h1>Certificates</h1>
     <p class="section-sub">
-      Coursework I'm happy to show — each tile links to its verification page.
+      Coursework I'm happy to show — each tile opens the certificate or its verification page.
     </p>
     <div class="cert-grid">
-      {certs.map((c) => (
-        <CertTile cert={c} />
+      {certs.map((c, i) => (
+        <CertTile cert={c} priority={i === 0} />
       ))}
     </div>
   </section>
@@ -50,6 +50,8 @@ const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
     gap: 1rem;
+    /* Equal-height rows so every tile lines up, regardless of title/issuer length. */
+    grid-auto-rows: 1fr;
   }
 
   .contact-actions {
