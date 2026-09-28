@@ -14,6 +14,18 @@ const projects = defineCollection({
         video: z.string().url().optional(),
       })
       .default({}),
+    // Optional demo assets: a screenshot plus shared recipe links. `image` is a
+    // path relative to the public root (e.g. 'projects/agent-conan-snapshot.jpg').
+    assets: z
+      .object({
+        image: z.string().optional(),
+        imageAlt: z.string().optional(),
+        imageWidth: z.number().optional(),
+        imageHeight: z.number().optional(),
+        recipe: z.string().url().optional(),
+        skill: z.string().url().optional(),
+      })
+      .default({}),
     featured: z.boolean().default(false),
     order: z.number().default(0),
     // Marks an entry as not-yet-started so cards can show a status note.

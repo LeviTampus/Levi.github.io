@@ -7,7 +7,9 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { title, type, tagline, technologies, links, featured, wip, wipNote } = project.data;
+const { title, type, tagline, technologies, links, assets, featured, wip, wipNote } =
+  project.data;
+const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
 
 const badge: Record<string, string> = {
   professional: 'Professional',
@@ -29,6 +31,18 @@ const badge: Record<string, string> = {
     <slot />
   </div>
   {wipNote && <p class="wip-note">{wipNote}</p>}
+  {assets.image && (
+    <figure class="snapshot">
+      <img
+        src={`${base}/${assets.image}`}
+        alt={assets.imageAlt ?? `${title} snapshot`}
+        loading="lazy"
+        decoding="async"
+        width={assets.imageWidth}
+        height={assets.imageHeight}
+      />
+    </figure>
+  )}
   {technologies.length > 0 && (
     <ul class="tech" aria-label="Technologies">
       {technologies.map((t) => (
@@ -36,7 +50,7 @@ const badge: Record<string, string> = {
       ))}
     </ul>
   )}
-  {(links.demo || links.repo || links.video) && (
+  {(links.demo || links.repo || links.video || assets.recipe || assets.skill) && (
     <p class="links">
       {links.demo && <Button href={links.demo} external>Live demo</Button>}
       {links.repo && (
@@ -44,6 +58,12 @@ const badge: Record<string, string> = {
       )}
       {links.video && (
         <a href={links.video} target="_blank" rel="noopener noreferrer">Video</a>
+      )}
+      {assets.recipe && (
+        <a href={assets.recipe} target="_blank" rel="noopener noreferrer">Agent recipe</a>
+      )}
+      {assets.skill && (
+        <a href={assets.skill} target="_blank" rel="noopener noreferrer">Skill recipe</a>
       )}
     </p>
   )}
@@ -125,6 +145,19 @@ const badge: Record<string, string> = {
     border-left: 3px solid var(--rule);
     padding-left: 0.75rem;
     margin: 1rem 0 0;
+  }
+
+  .snapshot {
+    margin: 1rem 0 0;
+  }
+
+  .snapshot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-s);
+    background: var(--bg);
   }
 
   .tech {
