@@ -5,7 +5,7 @@ tagline: 'Planned Workato Genie assistant that gathers integration requirements 
 technologies: ['Workato', 'Workato AI Agent', 'Slackbot']
 links: {}
 featured: false
-order: 3
+order: 4
 wip: true
 wipNote: 'Work in progress — not started yet. This entry is a placeholder and will be updated once the work can be shared.'
 ---

@@ -6,7 +6,7 @@ technologies: ['Python', 'Standard Library', 'Tkinter', 'Tenrai API', 'JSON Stor
 links:
   repo: 'https://github.com/LeviTampus/python-anime-watchlist'
 featured: false
-order: 2
+order: 3
 ---
 
 ## Why I built it
