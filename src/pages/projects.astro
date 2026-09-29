@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
-import ProjectCard from '../components/ProjectCard.astro';
+import FeaturedCard from '../components/FeaturedCard.astro';
+import ProjectRow from '../components/ProjectRow.astro';
 import RecipeRow from '../components/RecipeRow.astro';
 import Button from '../components/Button.astro';
 import { getCollection } from 'astro:content';
@@ -10,6 +11,8 @@ const projects = (await getCollection('projects')).sort(
     Number(b.data.featured) - Number(a.data.featured) ||
     a.data.order - b.data.order,
 );
+const featured = projects.find((p) => p.data.featured);
+const rest = projects.filter((p) => p !== featured);
 const recipes = (await getCollection('recipes')).sort(
   (a, b) => a.data.order - b.data.order,
 );
@@ -29,14 +32,22 @@ const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
     <p class="section-sub">
       Professional and personal work — labeled honestly. The featured project is the deepest case study.
     </p>
-    {projects.map(async (p) => {
-      const { Content } = await p.render();
-      return (
-        <ProjectCard project={p}>
-          <Content />
-        </ProjectCard>
-      );
-    })}
+    {featured && (
+      <div class="featured-block">
+        <h2 class="block-head">Featured project</h2>
+        <FeaturedCard project={featured} />
+      </div>
+    )}
+    {rest.length > 0 && (
+      <div class="list-block">
+        <h2 class="block-head">All projects</h2>
+        <div class="project-list">
+          {rest.map((p) => (
+            <ProjectRow project={p} />
+          ))}
+        </div>
+      </div>
+    )}
   </section>
 
   <section id="integrations" aria-label="Workato integrations">
@@ -91,6 +102,19 @@ const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
     font-size: clamp(2rem, 5vw, 3rem);
     line-height: 1.1;
     margin: 0 0 0.5rem;
+  }
+
+  .block-head {
+    font-size: 1.15rem;
+    margin: 0 0 0.85rem;
+  }
+
+  .list-block {
+    margin-top: 2.5rem;
+  }
+
+  .project-list {
+    border-top: 1px solid var(--border);
   }
 
   .archived {

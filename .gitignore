@@ -17,6 +17,9 @@ design-preference.png
 hi-reso.png
 notpreferred.jpg
 
+# Recognition source images (reference only; published copies live in public/recognition)
+recognitions/
+
 # Planning docs (local only)
 docs/superpowers/
 

@@ -2,6 +2,7 @@
 title: 'Python Anime Watchlist'
 type: 'personal'
 tagline: "A small command-line app for searching anime, following what's airing, and keeping a watchlist that persists between sessions."
+preview: 'A fundamentals exercise with no external packages — the same modules back a CLI and an optional Tkinter window, with the watchlist saved as local JSON.'
 technologies: ['Python', 'Standard Library', 'Tkinter', 'Tenrai API', 'JSON Storage', 'CLI']
 links:
   repo: 'https://github.com/LeviTampus/python-anime-watchlist'

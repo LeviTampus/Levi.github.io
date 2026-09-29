@@ -1,0 +1,103 @@
+---
+import { getCollection } from 'astro:content';
+import { recognitionImageMeta } from '../data/recognitionImages';
+
+const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
+const items = await getCollection('recognition');
+const featured =
+  items.find((item) => item.data.featured) ??
+  [...items].sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0))[0];
+
+const image = featured?.data.assets[0];
+---
+{featured && image && (
+  <section id="recognition" aria-label="Recognition">
+    <h2 class="eyebrow">Not to brag, but…</h2>
+    <a class="band" href={`${base}/recognition`}>
+      <img
+        class="shot"
+        src={`${base}/recognition/${image}`}
+        alt={`${featured.data.title} — ${featured.data.source}`}
+        width={recognitionImageMeta[image]?.width}
+        height={recognitionImageMeta[image]?.height}
+        loading="lazy"
+        decoding="async"
+      />
+      <div class="copy">
+        <p class="quote">“{featured.data.quote}”</p>
+        <p class="source">— {featured.data.source}</p>
+        <span class="more">See all recognition →</span>
+      </div>
+    </a>
+  </section>
+)}
+
+<style>
+  .eyebrow {
+    font-family: var(--font-hand);
+    font-weight: 600;
+    font-size: 1.75rem;
+    line-height: 1;
+    color: var(--accent-strong);
+    margin: 0 0 0.6rem;
+  }
+
+  .band {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: 1.5rem;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    padding: 1.25rem;
+    color: var(--ink);
+    text-decoration: none;
+    transition: border-color 120ms ease;
+  }
+
+  .shot {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-s);
+    background: var(--surface-tint);
+  }
+
+  .quote {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .source {
+    margin: 0 0 0.75rem;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .more {
+    color: var(--accent-strong);
+    font-weight: 700;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .band:hover {
+      border-color: var(--accent);
+    }
+
+    .band:hover .more {
+      text-decoration: underline;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .band {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

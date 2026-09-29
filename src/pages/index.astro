@@ -4,6 +4,7 @@ import Hero from '../components/Hero.astro';
 import SkillTiles from '../components/SkillTiles.astro';
 import HomeFeatured from '../components/HomeFeatured.astro';
 import QuoteStatsBand from '../components/QuoteStatsBand.astro';
+import RecognitionTeaser from '../components/RecognitionTeaser.astro';
 import Button from '../components/Button.astro';
 import { site } from '../data/site';
 import { getCollection } from 'astro:content';
@@ -33,6 +34,8 @@ const description =
   </section>
 
   {featured && <HomeFeatured project={featured} experience={experience} />}
+
+  <RecognitionTeaser />
 
   <QuoteStatsBand />
 

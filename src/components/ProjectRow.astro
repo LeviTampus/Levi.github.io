@@ -1,0 +1,250 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Button from './Button.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { title, type, tagline, preview, technologies, links, assets, wip, wipNote } =
+  project.data;
+const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
+const href = `${base}/projects/${project.slug}`;
+const summary = preview ?? tagline;
+
+const badge: Record<string, string> = {
+  professional: 'Professional',
+  personal: 'Personal',
+  learning: 'Learning',
+};
+
+const shownTech = technologies.slice(0, 4);
+const extraTech = technologies.length - shownTech.length;
+const hasLinks = links.demo || links.repo || links.video || assets.recipe || assets.skill;
+---
+<article class="row">
+  <a class="row-head" href={href}>
+    <span class="tags">
+      <span class="tag badge">{badge[type]}</span>
+      {wip && <span class="tag wip-tag">Work in progress</span>}
+    </span>
+    <span class="row-title-wrap">
+      <h3>{title}</h3>
+      <span class="hint" aria-hidden="true">Details</span>
+    </span>
+    <span class="tagline">{tagline}</span>
+  </a>
+
+  <div class="reveal">
+    <div class="reveal-inner">
+      <div class="reveal-content">
+        <p class="preview">{summary}</p>
+        {shownTech.length > 0 && (
+          <ul class="tech" aria-label="Technologies">
+            {shownTech.map((t) => (
+              <li class="tag">{t}</li>
+            ))}
+            {extraTech > 0 && <li class="tag more">+{extraTech}</li>}
+          </ul>
+        )}
+        {wipNote && <p class="wip-note">{wipNote}</p>}
+        {hasLinks && (
+          <p class="links">
+            {links.demo && <Button href={links.demo} external>Live demo</Button>}
+            {links.repo && (
+              <a href={links.repo} target="_blank" rel="noopener noreferrer">Repository</a>
+            )}
+            {links.video && (
+              <a href={links.video} target="_blank" rel="noopener noreferrer">Video</a>
+            )}
+            {assets.recipe && (
+              <a href={assets.recipe} target="_blank" rel="noopener noreferrer">Agent recipe</a>
+            )}
+            {assets.skill && (
+              <a href={assets.skill} target="_blank" rel="noopener noreferrer">Skill recipe</a>
+            )}
+          </p>
+        )}
+        <a class="read" href={href}>Read the full case study <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</article>
+
+<style>
+  .row {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .row-head {
+    display: block;
+    padding: 1.1rem 0.25rem;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0 0 0.4rem;
+  }
+
+  .badge {
+    display: inline-block;
+    color: var(--muted);
+    background: var(--surface-tint);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.15rem 0.7rem;
+  }
+
+  .wip-tag {
+    display: inline-block;
+    color: var(--muted);
+    background: var(--surface-tint);
+    border: 1px dashed var(--rule);
+    border-radius: 999px;
+    padding: 0.15rem 0.7rem;
+    font-weight: 600;
+  }
+
+  .row-title-wrap {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .row-head h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    transition: color 120ms ease;
+  }
+
+  .hint {
+    flex: 0 0 auto;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent-strong);
+    white-space: nowrap;
+  }
+
+  .tagline {
+    display: block;
+    margin: 0.2rem 0 0;
+    color: var(--muted);
+  }
+
+  .reveal {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      grid-template-rows 260ms ease,
+      opacity 180ms ease,
+      visibility 0s linear 260ms;
+  }
+
+  .reveal-inner {
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .reveal-content {
+    padding: 0 0.25rem 1.25rem;
+  }
+
+  .row:hover .reveal,
+  .row:focus-within .reveal {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    visibility: visible;
+    transition:
+      grid-template-rows 260ms ease,
+      opacity 180ms ease,
+      visibility 0s;
+  }
+
+  .preview {
+    margin: 0 0 0.75rem;
+  }
+
+  .tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0 0 0.75rem;
+    padding: 0;
+  }
+
+  .tech li {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.2rem 0.65rem;
+    color: var(--muted);
+    font-weight: 500;
+    font-size: 0.78rem;
+  }
+
+  .tech li.more {
+    border-style: dashed;
+  }
+
+  .wip-note {
+    color: var(--muted);
+    font-size: 0.9rem;
+    border-left: 3px solid var(--rule);
+    padding-left: 0.75rem;
+    margin: 0 0 0.75rem;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    margin: 0 0 0.5rem;
+  }
+
+  .read {
+    display: inline-block;
+    font-weight: 600;
+    color: var(--accent-strong);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .row:hover .row-head h3,
+    .row:focus-within .row-head h3 {
+      color: var(--accent-strong);
+    }
+
+    .read:hover {
+      text-decoration: underline;
+    }
+  }
+
+  /* No hover (touch): keep the preview visible without interaction. */
+  @media (pointer: coarse) {
+    .reveal {
+      grid-template-rows: 1fr;
+      opacity: 1;
+      visibility: visible;
+      transition: none;
+    }
+
+    .hint {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      transition: none;
+    }
+  }
+</style>

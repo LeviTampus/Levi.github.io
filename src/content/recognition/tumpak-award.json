@@ -1,0 +1,11 @@
+{
+  "title": "Tumpak Award",
+  "kind": "award",
+  "source": "Workato",
+  "period": "May 2026",
+  "quote": "Tumpak means precise, accurate, exactly right… her nomination used data, not feelings.",
+  "context": "TeamPinoy Bayani Award — 'Speed is Our Edge.' Apr–May 2026: zero Critical/High flags across every Escalibur scan; on May 27 moved 15 tickets and closed 4 in a single shift; reproduced a complex SFTP issue herself before escalating; clean, disciplined handoffs.",
+  "assets": ["tumpak-2.jpg", "tumpak-award-1.jpg"],
+  "featured": true,
+  "order": 1
+}

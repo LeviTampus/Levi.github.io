@@ -2,6 +2,7 @@
 title: 'Agent Conan — Workato Genie'
 type: 'professional'
 tagline: 'A Workato Genie agent built in my support role that reviews the morning ticket queue and notifies each assignee, with a companion skill for ticket details.'
+preview: 'The team version of my personal monitoring agent. It reviews the morning queue, pulls each ticket’s details through a companion skill, and notifies the assignee.'
 technologies: ['Workato', 'Workato Genie', 'Agent Skills', 'Slackbot']
 links: {}
 assets:

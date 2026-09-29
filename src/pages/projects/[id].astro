@@ -1,0 +1,310 @@
+---
+import Base from '../../layouts/Base.astro';
+import Button from '../../components/Button.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { id: project.slug },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { title, type, tagline, technologies, links, assets, wip, wipNote } = project.data;
+const { Content } = await project.render();
+const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
+
+const badge: Record<string, string> = {
+  professional: 'Professional',
+  personal: 'Personal',
+  learning: 'Learning',
+};
+
+const hasLinks = links.demo || links.repo || links.video || assets.recipe || assets.skill;
+
+const ordered = (await getCollection('projects')).sort(
+  (a, b) =>
+    Number(b.data.featured) - Number(a.data.featured) ||
+    a.data.order - b.data.order,
+);
+const index = ordered.findIndex((p) => p.id === project.id);
+const prev = index > 0 ? ordered[index - 1] : undefined;
+const next = index >= 0 && index < ordered.length - 1 ? ordered[index + 1] : undefined;
+
+const pageTitle = `${title} — Levi Joan Tampus`;
+const description = tagline;
+---
+<Base title={pageTitle} description={description}>
+  <article class="case">
+    <p class="back"><a href={`${base}/projects`}>← All projects</a></p>
+
+    <header class="case-head">
+      <p class="tags">
+        <span class="tag badge">{badge[type]}</span>
+        {wip && <span class="tag wip-tag">Work in progress</span>}
+      </p>
+      <h1>{title}</h1>
+      <p class="tagline">{tagline}</p>
+    </header>
+
+    {technologies.length > 0 && (
+      <ul class="tech" aria-label="Technologies">
+        {technologies.map((t) => (
+          <li class="tag">{t}</li>
+        ))}
+      </ul>
+    )}
+
+    {hasLinks && (
+      <p class="links">
+        {links.demo && <Button href={links.demo} external>Live demo</Button>}
+        {links.repo && (
+          <a href={links.repo} target="_blank" rel="noopener noreferrer">Repository</a>
+        )}
+        {links.video && (
+          <a href={links.video} target="_blank" rel="noopener noreferrer">Video</a>
+        )}
+        {assets.recipe && (
+          <a href={assets.recipe} target="_blank" rel="noopener noreferrer">Agent recipe</a>
+        )}
+        {assets.skill && (
+          <a href={assets.skill} target="_blank" rel="noopener noreferrer">Skill recipe</a>
+        )}
+      </p>
+    )}
+
+    {wipNote && <p class="wip-note">{wipNote}</p>}
+
+    {assets.image && (
+      <figure class="snapshot">
+        <img
+          src={`${base}/${assets.image}`}
+          alt={assets.imageAlt ?? `${title} snapshot`}
+          width={assets.imageWidth}
+          height={assets.imageHeight}
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    )}
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    {(prev || next) && (
+      <nav class="pager" aria-label="More projects">
+        {prev ? (
+          <a class="pager-link prev" href={`${base}/projects/${prev.slug}`}>
+            <span class="pager-dir">Previous</span>
+            <span class="pager-title">{prev.data.title}</span>
+          </a>
+        ) : (
+          <span></span>
+        )}
+        {next && (
+          <a class="pager-link next" href={`${base}/projects/${next.slug}`}>
+            <span class="pager-dir">Next</span>
+            <span class="pager-title">{next.data.title}</span>
+          </a>
+        )}
+      </nav>
+    )}
+
+    <section class="cta" aria-label="Contact">
+      <h2>Want to talk about a project?</h2>
+      <p class="section-sub">
+        I'm always open to discussing integrations, support work, or new opportunities.
+      </p>
+      <p><Button href="mailto:levijoantampus@gmail.com">Email me</Button></p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .case {
+    padding-top: 2.5rem;
+  }
+
+  .back {
+    margin: 0 0 1.25rem;
+  }
+
+  .back a {
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .case-head h1 {
+    font-size: clamp(1.9rem, 4vw, 2.6rem);
+    margin: 0.4rem 0 0.5rem;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+  }
+
+  .badge {
+    display: inline-block;
+    color: var(--muted);
+    background: var(--surface-tint);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.15rem 0.7rem;
+  }
+
+  .wip-tag {
+    display: inline-block;
+    color: var(--muted);
+    background: var(--surface-tint);
+    border: 1px dashed var(--rule);
+    border-radius: 999px;
+    padding: 0.15rem 0.7rem;
+    font-weight: 600;
+  }
+
+  .tagline {
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 44rem;
+    margin: 0;
+  }
+
+  .tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 1.25rem 0 0;
+    padding: 0;
+  }
+
+  .tech li {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.2rem 0.65rem;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    margin: 1.25rem 0 0;
+  }
+
+  .wip-note {
+    color: var(--muted);
+    font-size: 0.95rem;
+    border-left: 3px solid var(--rule);
+    padding-left: 0.75rem;
+    margin: 1.25rem 0 0;
+  }
+
+  .snapshot {
+    margin: 1.5rem 0 0;
+  }
+
+  .snapshot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-s);
+    background: var(--bg);
+  }
+
+  .prose {
+    max-width: 46rem;
+    margin-top: 1.5rem;
+  }
+
+  .prose :global(h2) {
+    font-size: 1.3rem;
+    margin: 1.75rem 0 0.5rem;
+  }
+
+  .prose :global(h3) {
+    font-size: 1.1rem;
+    margin: 1.4rem 0 0.4rem;
+  }
+
+  .prose :global(p) {
+    margin: 0 0 1rem;
+  }
+
+  .pager {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+    border-top: 1px solid var(--border);
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+  }
+
+  .pager-link {
+    display: flex;
+    flex-direction: column;
+    max-width: 45%;
+    text-decoration: none;
+  }
+
+  .pager-link.next {
+    margin-left: auto;
+    text-align: right;
+  }
+
+  .pager-dir {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .pager-title {
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .pager-link:hover .pager-title {
+    color: var(--accent-strong);
+  }
+
+  .cta {
+    margin-top: 3rem;
+  }
+
+  .cta h2 {
+    font-size: 1.5rem;
+    margin: 0 0 0.25rem;
+  }
+
+  .cta p {
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .pager-link {
+      max-width: 100%;
+    }
+
+    .pager-link.next {
+      margin-left: 0;
+      text-align: left;
+    }
+  }
+</style>

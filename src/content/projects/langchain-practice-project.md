@@ -2,6 +2,7 @@
 title: 'LangChain Practice Project'
 type: 'learning'
 tagline: 'A guided Hyperskill build that grows a planetary Q&A assistant from a prompt template to RAG and tool calling.'
+preview: 'Grows across five stages — a plain prompt, few-shot prompting, RAG over planet text files, and three callable tools — with the pieces split into small modules.'
 technologies: ['Python', 'LangChain', 'Chroma', 'Groq', 'HuggingFace Embeddings', 'RAG', 'Tool Calling', 'Prompt Templates', 'LCEL / Runnables']
 links: { repo: 'https://github.com/LeviTampus/langchain-practice-project' }
 featured: false

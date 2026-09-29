@@ -2,6 +2,7 @@
 title: 'Python Anime Watchlist Agent'
 type: 'personal'
 tagline: 'A from-scratch CLI AI agent that manages an anime watchlist by chatting in natural language.'
+preview: 'Built to learn how an agent loop actually works — the model picks a tool, the program runs it, and anything that changes the watchlist asks for confirmation first.'
 technologies: ['Python', 'LLM Agents', 'Tool Calling', 'Ollama / Groq', 'CLI', 'Tenrai API']
 links:
   repo: 'https://github.com/LeviTampus/python-anime-watchlist-agent'

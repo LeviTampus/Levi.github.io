@@ -6,6 +6,9 @@ const projects = defineCollection({
     title: z.string(),
     type: z.enum(['professional', 'personal', 'learning']),
     tagline: z.string(),
+    // Short overview shown in the hover-expand row on the projects index.
+    // Falls back to the tagline when omitted.
+    preview: z.string().optional(),
     technologies: z.array(z.string()).default([]),
     links: z
       .object({
@@ -98,14 +101,19 @@ const archive = defineCollection({
   }),
 });
 
-// Reserved for future recognition/kudos content. Rendered only when published.
+// Customer and teammate recognition — awards, kudos, and feedback.
 const recognition = defineCollection({
   type: 'data',
   schema: z.object({
     title: z.string(),
-    context: z.string(),
-    asset: z.string().optional(),
-    status: z.enum(['placeholder', 'published']).default('placeholder'),
+    kind: z.enum(['award', 'kudos', 'feedback']),
+    source: z.string(),
+    period: z.string().optional(),
+    quote: z.string(),
+    context: z.string().optional(),
+    assets: z.array(z.string()).default([]), // filenames under public/recognition/
+    featured: z.boolean().default(false),
+    order: z.number().default(0),
   }),
 });
 

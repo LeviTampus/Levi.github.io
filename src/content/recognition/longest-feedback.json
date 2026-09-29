@@ -1,0 +1,10 @@
+{
+  "title": "Longest feedback",
+  "kind": "feedback",
+  "source": "AJ Allred, Lucid Software",
+  "period": "Aug 2025",
+  "quote": "walked me through multiple solutions, explaining tradeoffs… one of the best support chats I've had with any platform.",
+  "context": "A 206-word commendation on CSV Transform / Query Data vs SQL Collections vs Parse CSV. Internal: 'First in history of support? 206 words!'",
+  "assets": ["longest-feedback.jpg"],
+  "order": 2
+}
