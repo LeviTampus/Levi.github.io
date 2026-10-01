@@ -1,13 +1,15 @@
 ---
 title: 'Python Anime Watchlist Agent'
 type: 'personal'
-tagline: 'A from-scratch CLI AI agent that manages an anime watchlist by chatting in natural language.'
-preview: 'Built to learn how an agent loop actually works — the model picks a tool, the program runs it, and anything that changes the watchlist asks for confirmation first.'
+tagline: 'A CLI agent I built from scratch, without a framework. It calls a raw LLM API, runs a JSON tool loop, and asks before changing anything.'
+preview: 'Built to learn how an agent loop works. The model picks a tool, the program runs it, and anything that changes the watchlist asks for confirmation first.'
+hero: 'technical'
 technologies: ['Python', 'LLM Agents', 'Tool Calling', 'Ollama / Groq', 'CLI', 'Tenrai API']
 links:
   repo: 'https://github.com/LeviTampus/python-anime-watchlist-agent'
 featured: true
-order: 1
+order: 4
+status: 'shipped'
 trace:
   title: 'Agent run'
   status: 'Confirmed'
@@ -22,8 +24,8 @@ trace:
 ## Why I built it
 
 A personal project to understand how AI agents actually work by building one
-from scratch — the model call, the system prompt, the tools, the agent loop,
-and how it decides to stop. The goal was to learn the parts rather than wrap a
+from scratch: the model call, the system prompt, the tools, the agent loop, and
+how it decides to stop. I wanted to learn the parts instead of wrapping a
 framework.
 
 ## What it does
@@ -38,8 +40,8 @@ asks for a <code translate="no">y/n</code> confirmation before it runs.
 Plain Python with no external dependencies. The model replies with JSON naming
 a tool and its arguments; the program runs the matching function and feeds the
 result back until the model calls <code translate="no">finish</code>. It works with any OpenAI-compatible
-endpoint — Ollama locally or Groq in the cloud — and pulls anime data from the
-Tenrai API. The model never executes code itself; the program decides what
+endpoint, either Ollama locally or Groq in the cloud, and pulls anime data from
+the Tenrai API. The model never executes code itself; the program decides what
 happens.
 
 ## Where it stands

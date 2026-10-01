@@ -7,10 +7,10 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { title, type, tagline, technologies, links, featured, trace } = project.data;
-const pills = technologies.slice(0, 4);
+const { title, type, tagline, links, featured, trace, assets } = project.data;
 const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
 const caseHref = `${base}/projects/${project.slug}`;
+const hasPanel = Boolean(trace) || Boolean(assets.image);
 
 const badge: Record<string, string> = {
   professional: 'Professional',
@@ -18,7 +18,7 @@ const badge: Record<string, string> = {
   learning: 'Learning',
 };
 ---
-<article class={`featured-card${trace ? '' : ' no-trace'}`}>
+<article class={`featured-card${hasPanel ? '' : ' no-trace'}`}>
   <div class="copy">
     <p class="tags">
       <span class="tag badge">{badge[type]}</span>
@@ -26,16 +26,9 @@ const badge: Record<string, string> = {
     </p>
     <h3><a class="title-link" href={caseHref}>{title}</a></h3>
     <p class="tagline">{tagline}</p>
-    {pills.length > 0 && (
-      <ul class="tech" aria-label="Technologies">
-        {pills.map((t) => (
-          <li>{t}</li>
-        ))}
-      </ul>
-    )}
     <p class="links">
       {links.demo ? (
-        <Button href={links.demo} external>Live demo</Button>
+        <Button href={links.demo} external>{links.demoLabel ?? 'Live demo'}</Button>
       ) : links.repo ? (
         <Button href={links.repo} external>View on GitHub</Button>
       ) : null}
@@ -61,6 +54,19 @@ const badge: Record<string, string> = {
         ))}
       </ol>
     </div>
+  )}
+
+  {!trace && assets.image && (
+    <figure class="shot">
+      <img
+        src={`${base}/${assets.image}`}
+        alt={assets.imageAlt ?? `${title} snapshot`}
+        width={assets.imageWidth}
+        height={assets.imageHeight}
+        loading="lazy"
+        decoding="async"
+      />
+    </figure>
   )}
 </article>
 
@@ -125,25 +131,6 @@ const badge: Record<string, string> = {
     color: var(--muted);
   }
 
-  .tech {
-    display: grid;
-    grid-template-columns: repeat(2, max-content);
-    gap: 0.4rem;
-    list-style: none;
-    margin: 0 0 1.25rem;
-    padding: 0;
-  }
-
-  .tech li {
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    padding: 0.2rem 0.65rem;
-    font-size: 0.78rem;
-    font-weight: 500;
-    color: var(--muted);
-  }
-
   .links {
     display: flex;
     flex-wrap: wrap;
@@ -163,12 +150,25 @@ const badge: Record<string, string> = {
     }
   }
 
-  /* Optional decorative trace panel (e.g. an agent loop). */
+  /* Optional visual panel: a trace (e.g. an agent loop) or a screenshot. */
   .trace {
     border: 1px solid var(--border);
     border-radius: var(--radius-s);
     background: var(--bg);
     padding: 1rem 1.1rem;
+  }
+
+  .shot {
+    margin: 0;
+  }
+
+  .shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-s);
+    background: var(--surface-tint);
   }
 
   .trace-head {

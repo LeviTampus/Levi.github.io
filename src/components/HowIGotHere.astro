@@ -1,0 +1,56 @@
+---
+import { storyLead, storyBeats } from '../data/story';
+---
+<section id="story" aria-label="How I got here">
+  <h2>How I got here</h2>
+  <p class="lead">{storyLead}</p>
+  <ol class="beats">
+    {storyBeats.map((beat, i) => (
+      <li>
+        <span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+        <p>{beat}</p>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .lead {
+    max-width: 44rem;
+    margin: 0 0 1.75rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2.4vw, 1.5rem);
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--ink);
+  }
+
+  .beats {
+    display: grid;
+    gap: 0.9rem;
+    list-style: none;
+    max-width: 44rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .beats li {
+    display: grid;
+    grid-template-columns: 2.25rem 1fr;
+    gap: 0.85rem;
+    align-items: baseline;
+  }
+
+  .num {
+    font-family: var(--font-hand);
+    font-weight: 600;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: var(--accent);
+  }
+
+  .beats p {
+    margin: 0;
+    color: var(--ink);
+  }
+</style>

@@ -7,7 +7,7 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { title, type, tagline, preview, technologies, links, assets, wip, wipNote } =
+const { title, type, tagline, preview, status, technologies, links, assets, wipNote } =
   project.data;
 const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
 const href = `${base}/projects/${project.slug}`;
@@ -19,6 +19,11 @@ const badge: Record<string, string> = {
   learning: 'Learning',
 };
 
+const statusLabel: Record<string, string> = {
+  building: 'In progress',
+  planned: 'Coming soon',
+};
+
 const shownTech = technologies.slice(0, 4);
 const extraTech = technologies.length - shownTech.length;
 const hasLinks = links.demo || links.repo || links.video || assets.recipe || assets.skill;
@@ -27,7 +32,7 @@ const hasLinks = links.demo || links.repo || links.video || assets.recipe || ass
   <a class="row-head" href={href}>
     <span class="tags">
       <span class="tag badge">{badge[type]}</span>
-      {wip && <span class="tag wip-tag">Work in progress</span>}
+      {statusLabel[status] && <span class="tag status-tag">{statusLabel[status]}</span>}
     </span>
     <span class="row-title-wrap">
       <h3>{title}</h3>
@@ -51,7 +56,9 @@ const hasLinks = links.demo || links.repo || links.video || assets.recipe || ass
         {wipNote && <p class="wip-note">{wipNote}</p>}
         {hasLinks && (
           <p class="links">
-            {links.demo && <Button href={links.demo} external>Live demo</Button>}
+            {links.demo && (
+              <Button href={links.demo} external>{links.demoLabel ?? 'Live demo'}</Button>
+            )}
             {links.repo && (
               <a href={links.repo} target="_blank" rel="noopener noreferrer">Repository</a>
             )}
@@ -100,7 +107,7 @@ const hasLinks = links.demo || links.repo || links.video || assets.recipe || ass
     padding: 0.15rem 0.7rem;
   }
 
-  .wip-tag {
+  .status-tag {
     display: inline-block;
     color: var(--muted);
     background: var(--surface-tint);

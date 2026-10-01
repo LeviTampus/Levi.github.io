@@ -16,7 +16,7 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { title, type, tagline, technologies, links, assets, wip, wipNote } = project.data;
+const { title, type, tagline, status, technologies, links, assets, wipNote } = project.data;
 const { Content } = await project.render();
 const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
 
@@ -24,6 +24,11 @@ const badge: Record<string, string> = {
   professional: 'Professional',
   personal: 'Personal',
   learning: 'Learning',
+};
+
+const statusLabel: Record<string, string> = {
+  building: 'In progress',
+  planned: 'Coming soon',
 };
 
 const hasLinks = links.demo || links.repo || links.video || assets.recipe || assets.skill;
@@ -47,7 +52,7 @@ const description = tagline;
     <header class="case-head">
       <p class="tags">
         <span class="tag badge">{badge[type]}</span>
-        {wip && <span class="tag wip-tag">Work in progress</span>}
+        {statusLabel[status] && <span class="tag status-tag">{statusLabel[status]}</span>}
       </p>
       <h1>{title}</h1>
       <p class="tagline">{tagline}</p>
@@ -63,7 +68,9 @@ const description = tagline;
 
     {hasLinks && (
       <p class="links">
-        {links.demo && <Button href={links.demo} external>Live demo</Button>}
+        {links.demo && (
+          <Button href={links.demo} external>{links.demoLabel ?? 'Live demo'}</Button>
+        )}
         {links.repo && (
           <a href={links.repo} target="_blank" rel="noopener noreferrer">Repository</a>
         )}
@@ -162,7 +169,7 @@ const description = tagline;
     padding: 0.15rem 0.7rem;
   }
 
-  .wip-tag {
+  .status-tag {
     display: inline-block;
     color: var(--muted);
     background: var(--surface-tint);

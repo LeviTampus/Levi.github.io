@@ -1,8 +1,9 @@
 ---
 title: 'Agent Conan — Workato Genie'
 type: 'professional'
-tagline: 'A Workato Genie agent built in my support role that reviews the morning ticket queue and notifies each assignee, with a companion skill for ticket details.'
-preview: 'The team version of my personal monitoring agent. It reviews the morning queue, pulls each ticket’s details through a companion skill, and notifies the assignee.'
+tagline: 'A Workato Genie that reviews the morning ticket queue and notifies the assignee. A separate skill fetches the ticket details.'
+preview: 'The team version of my personal monitoring agent. It reviews the morning queue, fetches each ticket’s details through a companion skill, and notifies the assignee.'
+hero: 'professional'
 technologies: ['Workato', 'Workato Genie', 'Agent Skills', 'Slackbot']
 links: {}
 assets:
@@ -13,8 +14,8 @@ assets:
   recipe: 'https://app.workato.com/recipes/82410038-morning-ticket-review/browse?community=us'
   skill: 'https://app.workato.com/recipes/82411073-ticket-details/browse?community=us'
 featured: false
-order: 4
-wip: true
+order: 1
+status: 'building'
 ---
 
 ## Why I built it
@@ -30,9 +31,9 @@ ticket through a companion skill, and notifies the assignee.
 
 ## How it's built
 
-A Workato Genie agent — Agent Conan — paired with a ticket-details skill. The
-agent recipe runs the morning review; the skill handles the lookups. Both recipes
-are shared in Workato's community and linked below.
+The agent is a Workato Genie named Agent Conan, paired with a ticket-details
+skill. The agent recipe runs the morning review, and the skill handles the
+lookups. Both recipes are shared in Workato's community and linked below.
 
 ## Where it stands
 

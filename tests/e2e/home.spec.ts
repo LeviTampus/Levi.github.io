@@ -20,6 +20,18 @@ test('projects page loads', async ({ page }) => {
   await expect(page.locator('main#main')).toBeVisible();
 });
 
+test('projects page tells the narrative', async ({ page }) => {
+  await page.goto('./projects/');
+
+  await expect(
+    page.getByRole('heading', { level: 2, name: /How I got here/i }),
+  ).toBeVisible();
+  await expect(page.getByText('The deep build')).toBeVisible();
+  await expect(page.getByText('From my day job')).toBeVisible();
+  await expect(page.getByRole('link', { name: /RAG Eval Assistant/i }).first()).toBeVisible();
+  await expect(page.getByText('Coming soon').first()).toBeVisible();
+});
+
 test('projects index lists projects linking to case studies', async ({ page }) => {
   await page.goto('./projects/');
 

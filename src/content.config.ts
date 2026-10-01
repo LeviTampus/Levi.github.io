@@ -9,11 +9,16 @@ const projects = defineCollection({
     // Short overview shown in the hover-expand row on the projects index.
     // Falls back to the tagline when omitted.
     preview: z.string().optional(),
+    // Hero slot on the projects page: the technical deep-build or the
+    // professional proof from the day job.
+    hero: z.enum(['technical', 'professional']).optional(),
     technologies: z.array(z.string()).default([]),
     links: z
       .object({
         repo: z.string().url().optional(),
         demo: z.string().url().optional(),
+        // Overrides the "Live demo" button label (e.g. "Old build").
+        demoLabel: z.string().optional(),
         video: z.string().url().optional(),
       })
       .default({}),
@@ -31,6 +36,8 @@ const projects = defineCollection({
       .default({}),
     featured: z.boolean().default(false),
     order: z.number().default(0),
+    // Build status, drives the status chip on the projects index.
+    status: z.enum(['shipped', 'building', 'planned']).default('shipped'),
     // Marks an entry as not-yet-started so cards can show a status note.
     wip: z.boolean().default(false),
     wipNote: z.string().optional(),

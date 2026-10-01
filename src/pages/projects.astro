@@ -1,18 +1,24 @@
 ---
 import Base from '../layouts/Base.astro';
-import FeaturedCard from '../components/FeaturedCard.astro';
+import ProjectHero from '../components/ProjectHero.astro';
+import HowIGotHere from '../components/HowIGotHere.astro';
 import ProjectRow from '../components/ProjectRow.astro';
 import RecipeRow from '../components/RecipeRow.astro';
 import Button from '../components/Button.astro';
 import { getCollection } from 'astro:content';
 
-const projects = (await getCollection('projects')).sort(
-  (a, b) =>
-    Number(b.data.featured) - Number(a.data.featured) ||
-    a.data.order - b.data.order,
-);
-const featured = projects.find((p) => p.data.featured);
-const rest = projects.filter((p) => p !== featured);
+const projects = await getCollection('projects');
+
+const technical =
+  projects.find((p) => p.data.hero === 'technical') ??
+  projects.find((p) => p.data.featured) ??
+  [...projects].sort((a, b) => a.data.order - b.data.order)[0];
+const professional =
+  projects.find((p) => p.data.hero === 'professional') ??
+  projects.find((p) => p.data.type === 'professional');
+
+const list = [...projects].sort((a, b) => a.data.order - b.data.order);
+
 const recipes = (await getCollection('recipes')).sort(
   (a, b) => a.data.order - b.data.order,
 );
@@ -22,7 +28,7 @@ const archiveItems = (await getCollection('archive')).sort(
 
 const title = 'Projects — Levi Joan Tampus';
 const description =
-  'Professional and personal projects, Workato integrations, and archived work from Levi Joan Tampus.';
+  'How Levi Joan Tampus got from support engineering to building AI agents: professional and personal work, labeled honestly.';
 const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
 ---
 
@@ -30,30 +36,29 @@ const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
   <section id="projects" aria-label="Projects">
     <h1>Projects</h1>
     <p class="section-sub">
-      Professional and personal work — labeled honestly. The featured project is the deepest case study.
+      Professional and personal work, labeled honestly. Here's how it fits together.
     </p>
-    {featured && (
-      <div class="featured-block">
-        <h2 class="block-head">Featured project</h2>
-        <FeaturedCard project={featured} />
-      </div>
-    )}
-    {rest.length > 0 && (
-      <div class="list-block">
-        <h2 class="block-head">All projects</h2>
-        <div class="project-list">
-          {rest.map((p) => (
-            <ProjectRow project={p} />
-          ))}
-        </div>
-      </div>
-    )}
+    <ProjectHero technical={technical} professional={professional} />
+  </section>
+
+  <HowIGotHere />
+
+  <section id="all-projects" aria-label="All projects">
+    <h2>All projects</h2>
+    <p class="section-sub">
+      Everything, in the order it happened.
+    </p>
+    <div class="project-list">
+      {list.map((p) => (
+        <ProjectRow project={p} />
+      ))}
+    </div>
   </section>
 
   <section id="integrations" aria-label="Workato integrations">
     <h2>Workato Integrations</h2>
     <p class="section-sub">
-      A couple of integration and workflow builds. One is shared publicly; the other lives in Workato and needs a sign-in.
+      A couple of integration and workflow builds. One is public; the other needs a Workato sign-in.
     </p>
     {recipes.map((r) => (
       <RecipeRow recipe={r} />
@@ -63,7 +68,7 @@ const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
   <section id="archive" aria-label="Earlier and archived work">
     <h2>From the archives</h2>
     <p class="section-sub">
-      Older work that shows where I started — kept for context, not the main act.
+      Older work from where I started, kept for context.
     </p>
     {archiveItems.map(async (item) => {
       const { Content } = await item.render();
@@ -102,15 +107,6 @@ const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
     font-size: clamp(2rem, 5vw, 3rem);
     line-height: 1.1;
     margin: 0 0 0.5rem;
-  }
-
-  .block-head {
-    font-size: 1.15rem;
-    margin: 0 0 0.85rem;
-  }
-
-  .list-block {
-    margin-top: 2.5rem;
   }
 
   .project-list {
