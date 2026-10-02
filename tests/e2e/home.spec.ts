@@ -35,7 +35,7 @@ test('projects page tells the narrative', async ({ page }) => {
 test('projects index lists projects linking to case studies', async ({ page }) => {
   await page.goto('./projects/');
 
-  await expect(page.getByRole('heading', { level: 2, name: /All projects/i })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: /AI development Projects/i })).toBeVisible();
 
   const row = page.getByRole('link', { name: /LangChain Practice Project/i }).first();
   await expect(row).toBeVisible();

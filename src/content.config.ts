@@ -60,6 +60,11 @@ const recipes = defineCollection({
     access: z.enum(['gated', 'public']).default('gated'),
     purpose: z.string().optional(),
     systems: z.array(z.string()).default([]),
+    // Optional screenshot, path relative to the public root.
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
+    imageWidth: z.number().optional(),
+    imageHeight: z.number().optional(),
     order: z.number().default(0),
   }),
 });

@@ -6,27 +6,70 @@ interface Props {
 }
 
 const { recipe } = Astro.props;
-const { title, workatoUrl, purpose, access } = recipe.data;
+const { title, workatoUrl, purpose, access, image, imageAlt, imageWidth, imageHeight } =
+  recipe.data;
+const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
+const zoomId = `zoom-recipe-${recipe.slug}`;
+const alt = imageAlt ?? `${title} screenshot`;
 ---
 <article class="recipe">
-  <div>
-    <h3>{title}</h3>
-    {purpose && <p>{purpose}</p>}
+  <div class="recipe-head">
+    <div>
+      <h3>{title}</h3>
+      {purpose && <p>{purpose}</p>}
+    </div>
+    <a href={workatoUrl} target="_blank" rel="noopener noreferrer">
+      View in Workato{access === 'gated' && <span class="tag muted"> (requires sign-in)</span>}
+    </a>
   </div>
-  <a href={workatoUrl} target="_blank" rel="noopener noreferrer">
-    View in Workato{access === 'gated' && <span class="tag muted"> (requires sign-in)</span>}
-  </a>
+
+  {image && (
+    <>
+      <a
+        class="shot-link"
+        href={`#${zoomId}`}
+        aria-label={`Enlarge: ${alt}`}
+      >
+        <img
+          class="shot"
+          src={`${base}/${image}`}
+          alt={alt}
+          width={imageWidth}
+          height={imageHeight}
+          loading="lazy"
+          decoding="async"
+        />
+      </a>
+      <a
+        class="lightbox"
+        id={zoomId}
+        href="#integrations"
+        aria-label={`Close enlarged image of ${title}`}
+      >
+        <img
+          src={`${base}/${image}`}
+          alt={alt}
+          width={imageWidth}
+          height={imageHeight}
+          decoding="async"
+        />
+      </a>
+    </>
+  )}
 </article>
 
 <style>
   .recipe {
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 0;
+  }
+
+  .recipe-head {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem 1.5rem;
     align-items: baseline;
     justify-content: space-between;
-    border-bottom: 1px solid var(--border);
-    padding: 1rem 0;
   }
 
   .recipe h3 {
@@ -34,11 +77,70 @@ const { title, workatoUrl, purpose, access } = recipe.data;
     font-size: 1.05rem;
   }
 
-  .recipe p {
+  .recipe-head p {
     margin: 0;
   }
 
   .muted {
     color: var(--muted);
+  }
+
+  .shot-link {
+    display: block;
+    margin-top: 0.85rem;
+    border-radius: var(--radius-s);
+    cursor: zoom-in;
+  }
+
+  .shot {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-s);
+    background: var(--surface-tint);
+  }
+
+  /* CSS-only zoom: clicking the screenshot targets its full-size overlay. */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: none;
+    place-items: center;
+    padding: clamp(1rem, 4vw, 2.5rem);
+    background: rgba(43, 39, 36, 0.85);
+    text-decoration: none;
+    cursor: zoom-out;
+  }
+
+  .lightbox:target {
+    display: grid;
+  }
+
+  .lightbox img {
+    max-width: min(94vw, 1200px);
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    border-radius: var(--radius-s);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  .lightbox::after {
+    content: 'Click anywhere to close';
+    position: absolute;
+    bottom: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--accent-ink);
+    font-size: 0.85rem;
+    font-weight: 600;
+    opacity: 0.85;
+  }
+
+  :global(html:has(.lightbox:target)) {
+    overflow: hidden;
   }
 </style>
