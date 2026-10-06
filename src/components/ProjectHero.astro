@@ -3,27 +3,27 @@ import type { CollectionEntry } from 'astro:content';
 import FeaturedCard from './FeaturedCard.astro';
 
 interface Props {
-  technical?: CollectionEntry<'projects'>;
-  professional?: CollectionEntry<'projects'>;
+  projects: CollectionEntry<'projects'>[];
 }
 
-const { technical, professional } = Astro.props;
+const { projects } = Astro.props;
+
+const label = (track?: string) =>
+  track === 'workato'
+    ? 'From my day job'
+    : track === 'n8n'
+      ? 'Low-code automation'
+      : 'From scratch';
 ---
-<section id="highlighted" aria-label="Highlighted projects">
-  <h2 class="sr-only">Highlighted projects</h2>
+<section id="highlighted" aria-label="Featured projects">
+  <h2 class="sr-only">Featured projects</h2>
   <div class="band">
-    {technical && (
+    {projects.map((project) => (
       <div class="slot">
-        <p class="role-label">The deep build</p>
-        <FeaturedCard project={technical} />
+        <p class="role-label">{label(project.data.track)}</p>
+        <FeaturedCard project={project} />
       </div>
-    )}
-    {professional && (
-      <div class="slot">
-        <p class="role-label">From my day job</p>
-        <FeaturedCard project={professional} />
-      </div>
-    )}
+    ))}
   </div>
 </section>
 

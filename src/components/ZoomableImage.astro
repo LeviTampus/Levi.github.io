@@ -1,0 +1,93 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  zoomId: string;
+  width?: number;
+  height?: number;
+  loading?: 'lazy' | 'eager';
+  closeHref?: string;
+}
+
+const {
+  src,
+  alt,
+  zoomId,
+  width,
+  height,
+  loading = 'lazy',
+  closeHref = '#all-projects',
+} = Astro.props;
+---
+<a class="zoom-link" href={`#${zoomId}`} aria-label={`Enlarge: ${alt}`}>
+  <img
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={loading}
+    decoding="async"
+  />
+</a>
+<a class="lightbox" id={zoomId} href={closeHref} aria-label="Close enlarged image">
+  <img src={src} alt={alt} decoding="async" />
+</a>
+
+<style>
+  .zoom-link {
+    display: block;
+    border-radius: 0.6rem;
+    cursor: zoom-in;
+  }
+
+  .zoom-link img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border);
+    border-radius: 0.6rem;
+    background: var(--surface-tint);
+  }
+
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: none;
+    place-items: center;
+    padding: clamp(1rem, 4vw, 2.5rem);
+    background: rgba(43, 39, 36, 0.85);
+    text-decoration: none;
+    cursor: zoom-out;
+  }
+
+  .lightbox:target {
+    display: grid;
+  }
+
+  .lightbox img {
+    max-width: min(94vw, 1200px);
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    border-radius: var(--radius-s);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  .lightbox::after {
+    content: 'Click anywhere to close';
+    position: absolute;
+    bottom: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--accent-ink);
+    font-size: 0.85rem;
+    font-weight: 600;
+    opacity: 0.85;
+  }
+
+  :global(html:has(.lightbox:target)) {
+    overflow: hidden;
+  }
+</style>

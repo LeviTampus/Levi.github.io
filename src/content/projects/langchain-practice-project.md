@@ -1,13 +1,12 @@
 ---
 title: 'LangChain Practice Project'
 type: 'learning'
+track: 'python'
 tagline: 'A guided build where a small planetary Q&A assistant grows from a prompt template to RAG to tool calling.'
 preview: 'Grows across five stages: a plain prompt, few-shot prompting, RAG over planet text files, and three callable tools. The pieces are split into small modules.'
-technologies: ['Python', 'LangChain', 'Chroma', 'Groq', 'HuggingFace Embeddings', 'RAG', 'Tool Calling', 'Prompt Templates', 'LCEL / Runnables']
+technologies: ['Python', 'LangChain', 'RAG', 'Tool Calling']
 links: { repo: 'https://github.com/LeviTampus/langchain-practice-project' }
-featured: false
-order: 5
-status: 'shipped'
+order: 3
 ---
 
 ## Why I built it

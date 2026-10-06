@@ -1,0 +1,115 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ZoomableImage from './ZoomableImage.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { title, tagline, technologies, links, assets } = project.data;
+const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
+const href = `${base}/projects/${project.slug}`;
+const tools = technologies.slice(0, 4);
+---
+<article class="tcard">
+  <h3><a href={href}>{title}</a></h3>
+  {tools.length > 0 && (
+    <ul class="tools" aria-label="Tools">
+      {tools.map((t) => (
+        <li>{t}</li>
+      ))}
+    </ul>
+  )}
+  <p class="line">{tagline}</p>
+  {assets.image && (
+    <ZoomableImage
+      src={`${base}/${assets.image}`}
+      alt={assets.imageAlt ?? `${title} demo`}
+      zoomId={`zoom-${project.slug}`}
+    />
+  )}
+  <p class="links">
+    {links.repo && <a href={links.repo} target="_blank" rel="noopener noreferrer">Repository</a>}
+    {links.demo && (
+      <a href={links.demo} target="_blank" rel="noopener noreferrer">
+        {links.demoLabel ?? 'Live demo'}
+      </a>
+    )}
+    {assets.recipe && (
+      <a href={assets.recipe} target="_blank" rel="noopener noreferrer">Agent recipe</a>
+    )}
+    {assets.skill && (
+      <a href={assets.skill} target="_blank" rel="noopener noreferrer">Skill recipe</a>
+    )}
+  </p>
+</article>
+
+<style>
+  .tcard {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-s);
+    padding: 1rem 1.05rem;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.02rem;
+    line-height: 1.25;
+  }
+
+  h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  h3 a:hover {
+    color: var(--accent-strong);
+  }
+
+  .tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .tools li {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--muted);
+    background: var(--surface-tint);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.1rem 0.55rem;
+  }
+
+  .line {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    margin: 0.1rem 0 0;
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+
+  .links a {
+    text-decoration: none;
+  }
+
+  .links a:hover {
+    text-decoration: underline;
+  }
+</style>

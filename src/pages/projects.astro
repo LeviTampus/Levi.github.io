@@ -1,23 +1,23 @@
 ---
 import Base from '../layouts/Base.astro';
 import ProjectHero from '../components/ProjectHero.astro';
-import HowIGotHere from '../components/HowIGotHere.astro';
-import ProjectRow from '../components/ProjectRow.astro';
-import RecipeRow from '../components/RecipeRow.astro';
+import TrackLane from '../components/TrackLane.astro';
+import TrackCard from '../components/TrackCard.astro';
+import RecipeCard from '../components/RecipeCard.astro';
 import Button from '../components/Button.astro';
 import { getCollection } from 'astro:content';
+import { tracks, type TrackId } from '../data/tracks';
 
 const projects = await getCollection('projects');
+const featured = projects
+  .filter((p) => p.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 2);
 
-const technical =
-  projects.find((p) => p.data.hero === 'technical') ??
-  projects.find((p) => p.data.featured) ??
-  [...projects].sort((a, b) => a.data.order - b.data.order)[0];
-const professional =
-  projects.find((p) => p.data.hero === 'professional') ??
-  projects.find((p) => p.data.type === 'professional');
-
-const list = [...projects].sort((a, b) => a.data.order - b.data.order);
+const byTrack = (track: TrackId) =>
+  projects
+    .filter((p) => p.data.track === track)
+    .sort((a, b) => a.data.order - b.data.order);
 
 const recipes = (await getCollection('recipes')).sort(
   (a, b) => a.data.order - b.data.order,
@@ -28,7 +28,7 @@ const archiveItems = (await getCollection('archive')).sort(
 
 const title = 'Projects — Levi Joan Tampus';
 const description =
-  'How Levi Joan Tampus got from support engineering to building AI agents: professional and personal work, labeled honestly.';
+  'AI agents and automation from Levi Joan Tampus: built at work in Workato, shipped low-code in n8n, and coded from scratch in Python.';
 const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
 ---
 
@@ -38,31 +38,34 @@ const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
     <p class="section-sub">
       Professional and personal work, labeled honestly. Here's how it fits together.
     </p>
-    <ProjectHero technical={technical} professional={professional} />
+    <ProjectHero projects={featured} />
   </section>
-
-  <HowIGotHere />
 
   <section id="all-projects" aria-label="AI development projects">
     <h2>AI development Projects</h2>
-    <p class="section-sub">
-      Everything, in the order it happened.
+    <p class="lede">
+      AI agents and automation: built at work in Workato, shipped low-code in n8n, and coded
+      from scratch in Python.
     </p>
-    <div class="project-list">
-      {list.map((p) => (
-        <ProjectRow project={p} />
+    <div class="lanes">
+      {tracks.map((t) => (
+        <TrackLane
+          platform={t.platform}
+          skill={t.skill}
+          note={t.note}
+          count={
+            t.id === 'workato'
+              ? byTrack('workato').length + recipes.length
+              : byTrack(t.id).length
+          }
+        >
+          {byTrack(t.id).map((p) => (
+            <TrackCard project={p} />
+          ))}
+          {t.id === 'workato' && recipes.map((r) => <RecipeCard recipe={r} />)}
+        </TrackLane>
       ))}
     </div>
-  </section>
-
-  <section id="integrations" aria-label="Workato integrations">
-    <h2>Workato Integrations</h2>
-    <p class="section-sub">
-      A couple of integration and workflow builds. One is public; the other needs a Workato sign-in.
-    </p>
-    {recipes.map((r) => (
-      <RecipeRow recipe={r} />
-    ))}
   </section>
 
   <section id="archive" aria-label="Earlier and archived work">
@@ -82,6 +85,20 @@ const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
             <p>
               <a href={item.data.links.playlist} target="_blank" rel="noopener noreferrer">
                 Watch the training playlist
+              </a>
+            </p>
+          )}
+          {item.data.links.repo && (
+            <p>
+              <a href={item.data.links.repo} target="_blank" rel="noopener noreferrer">
+                Repository
+              </a>
+            </p>
+          )}
+          {item.data.links.demo && (
+            <p>
+              <a href={item.data.links.demo} target="_blank" rel="noopener noreferrer">
+                View the old build
               </a>
             </p>
           )}
@@ -109,8 +126,24 @@ const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
     margin: 0 0 0.5rem;
   }
 
-  .project-list {
-    border-top: 1px solid var(--border);
+  .lede {
+    margin: 0 0 1.5rem;
+    max-width: 46rem;
+    color: var(--muted);
+    font-size: 1.02rem;
+  }
+
+  .lanes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .lanes {
+      grid-template-columns: 1fr;
+    }
   }
 
   .archived {
@@ -130,6 +163,10 @@ const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
   .archived .muted {
     color: var(--muted);
     margin: 0;
+  }
+
+  .archived p {
+    margin: 0.5rem 0 0;
   }
 
   .contact-actions {

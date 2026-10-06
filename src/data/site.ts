@@ -4,7 +4,7 @@ export const site = {
   linkedin: 'https://www.linkedin.com/in/levi-joan-tampus-b431b8140/',
   github: 'https://github.com/LeviTampus',
   location: 'Cebu City, Philippines',
-  tagline: 'Technical support, integrations, APIs, automation, and AI agents.',
+  tagline: 'AI automation and integrations: agents built in Workato, n8n, and Python.',
 } as const;
 
 export const navLinks = [

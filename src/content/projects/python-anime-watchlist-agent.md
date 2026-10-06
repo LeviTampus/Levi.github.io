@@ -1,15 +1,14 @@
 ---
 title: 'Python Anime Watchlist Agent'
 type: 'personal'
+track: 'python'
 tagline: 'A CLI agent I built from scratch, without a framework. It calls a raw LLM API, runs a JSON tool loop, and asks before changing anything.'
 preview: 'Built to learn how an agent loop works. The model picks a tool, the program runs it, and anything that changes the watchlist asks for confirmation first.'
-hero: 'technical'
-technologies: ['Python', 'LLM Agents', 'Tool Calling', 'Ollama / Groq', 'CLI', 'Tenrai API']
+technologies: ['Python', 'Agents', 'Groq', 'Tenrai API']
 links:
   repo: 'https://github.com/LeviTampus/python-anime-watchlist-agent'
-featured: true
-order: 4
-status: 'shipped'
+featured: false
+order: 2
 trace:
   title: 'Agent run'
   status: 'Confirmed'

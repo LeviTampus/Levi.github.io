@@ -15,11 +15,11 @@ const experience = (await getCollection('experience'))
 const projects = (await getCollection('projects')).sort(
   (a, b) => a.data.order - b.data.order,
 );
-const featured = projects.find((p) => p.data.featured) ?? projects[0];
+const featured = projects.filter((p) => p.data.featured);
 
-const title = 'Levi Joan Tampus — Product Support & Integrations';
+const title = 'Levi Joan Tampus — AI Automation & Integrations Engineer';
 const description =
-  'Portfolio of Levi Joan Tampus: 11 years of professional support experience, 4 years in enterprise integration support, Workato, APIs, automation, and AI agent projects.';
+  'Portfolio of Levi Joan Tampus, AI Automation & Integrations Engineer: AI agents and automation built in Workato, n8n, and Python.';
 ---
 
 <Base title={title} description={description}>
@@ -33,7 +33,7 @@ const description =
     <SkillTiles />
   </section>
 
-  {featured && <HomeFeatured project={featured} experience={experience} />}
+  {featured.length > 0 && <HomeFeatured projects={featured} experience={experience} />}
 
   <RecognitionTeaser />
 

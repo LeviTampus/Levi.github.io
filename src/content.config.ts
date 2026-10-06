@@ -9,9 +9,8 @@ const projects = defineCollection({
     // Short overview shown in the hover-expand row on the projects index.
     // Falls back to the tagline when omitted.
     preview: z.string().optional(),
-    // Hero slot on the projects page: the technical deep-build or the
-    // professional proof from the day job.
-    hero: z.enum(['technical', 'professional']).optional(),
+    // Which lane this project sits in on the projects index.
+    track: z.enum(['n8n', 'workato', 'python']),
     technologies: z.array(z.string()).default([]),
     links: z
       .object({
@@ -107,6 +106,8 @@ const archive = defineCollection({
     links: z
       .object({
         playlist: z.string().url().optional(),
+        repo: z.string().url().optional(),
+        demo: z.string().url().optional(),
       })
       .default({}),
     order: z.number().default(0),

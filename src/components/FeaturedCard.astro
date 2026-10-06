@@ -7,23 +7,14 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { title, type, tagline, links, featured, trace, assets } = project.data;
+const { title, tagline, technologies, links, trace, assets } = project.data;
+const tools = technologies.slice(0, 4);
 const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
 const caseHref = `${base}/projects/${project.slug}`;
 const hasPanel = Boolean(trace) || Boolean(assets.image);
-
-const badge: Record<string, string> = {
-  professional: 'Professional',
-  personal: 'Personal',
-  learning: 'Learning',
-};
 ---
 <article class={`featured-card${hasPanel ? '' : ' no-trace'}`}>
   <div class="copy">
-    <p class="tags">
-      <span class="tag badge">{badge[type]}</span>
-      {featured && <span class="tag featured-tag">Featured</span>}
-    </p>
     <h3><a class="title-link" href={caseHref}>{title}</a></h3>
     <p class="tagline">{tagline}</p>
     <p class="links">
@@ -36,6 +27,13 @@ const badge: Record<string, string> = {
         Read the full case study <span aria-hidden="true">→</span>
       </a>
     </p>
+    {tools.length > 0 && (
+      <ul class="tools" aria-label="Tools">
+        {tools.map((t) => (
+          <li>{t}</li>
+        ))}
+      </ul>
+    )}
   </div>
 
   {trace && (
@@ -90,30 +88,24 @@ const badge: Record<string, string> = {
     min-width: 0;
   }
 
-  .tags {
+  .tools {
     display: flex;
     flex-wrap: wrap;
     gap: 0.4rem;
-    margin: 0 0 0.6rem;
+    list-style: none;
+    margin: 0.85rem 0 0;
+    padding: 0;
   }
 
-  .badge,
-  .featured-tag {
+  .tools li {
     display: inline-block;
-    border-radius: 999px;
-    padding: 0.15rem 0.7rem;
-    margin: 0;
-  }
-
-  .badge {
+    font-size: 0.72rem;
+    font-weight: 600;
     color: var(--muted);
     background: var(--surface-tint);
     border: 1px solid var(--border);
-  }
-
-  .featured-tag {
-    color: var(--accent-strong);
-    background: var(--accent-soft);
+    border-radius: 999px;
+    padding: 0.15rem 0.7rem;
   }
 
   .featured-card h3 {

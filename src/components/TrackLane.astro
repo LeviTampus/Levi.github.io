@@ -1,0 +1,75 @@
+---
+interface Props {
+  platform: string;
+  skill: string;
+  note: string;
+  count: number;
+  countLabel?: string;
+  id?: string;
+}
+
+const { platform, skill, note, count, countLabel = 'projects', id } = Astro.props;
+---
+<section class="lane" id={id} aria-label={`${skill} — ${platform}`}>
+  <header class="lane-head">
+    <span class="badge">{platform}</span>
+    <h2>{skill}</h2>
+    <p class="lane-note">{note}</p>
+    <p class="lane-count">{count} {countLabel}</p>
+  </header>
+  <div class="lane-cards">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .lane {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface-tint);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+  }
+
+  .lane-head {
+    padding-bottom: 0.85rem;
+    margin-bottom: 0.85rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--accent-strong);
+    background: var(--accent-soft);
+    border-radius: 999px;
+    padding: 0.12rem 0.6rem;
+  }
+
+  .lane-head h2 {
+    margin: 0.5rem 0 0.3rem;
+    font-size: 1.35rem;
+  }
+
+  .lane-note {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .lane-count {
+    margin: 0.6rem 0 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .lane-cards {
+    display: grid;
+    gap: 0.85rem;
+  }
+</style>

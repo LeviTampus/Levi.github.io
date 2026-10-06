@@ -1,14 +1,13 @@
 ---
 title: 'Python Anime Watchlist'
 type: 'personal'
+track: 'python'
 tagline: 'A small Python app I built to practice the basics. The same code runs a command-line tool and a Tkinter window, and the watchlist saves to local JSON.'
 preview: 'A fundamentals exercise with no external packages: the same modules back a CLI and a Tkinter window, and the watchlist is saved as local JSON.'
-technologies: ['Python', 'Standard Library', 'Tkinter', 'Tenrai API', 'JSON Storage', 'CLI']
+technologies: ['Python', 'Tkinter', 'JSON', 'Tenrai API']
 links:
   repo: 'https://github.com/LeviTampus/python-anime-watchlist'
-featured: false
-order: 3
-status: 'shipped'
+order: 4
 ---
 
 ## Why I built it
