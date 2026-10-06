@@ -39,7 +39,7 @@ each repo README are generated from this file, so they always match.
 | **Integration / API Diagnostic Agent** | My first attempt at an agent. AI wrote most of it, and the code grew past what I could explain. | *(failed first attempt — no number)* |
 | **Python Anime Watchlist** | A fundamentals exercise — one core backing both a CLI and a Tkinter window, persisted as local JSON. | e.g. "0 dependencies · CLI + GUI" |
 | **Anime Watchlist Agent** | A from-scratch CLI AI agent — no framework: raw LLM API, JSON tool loop, and a confirm-before-changing gate. | e.g. "8 tools · 0 dependencies" |
-| **LangChain Practice** | A guided build that grows a planetary Q&A assistant from prompt template → RAG → tool calling. | (learning — no number needed) |
+| **LangChain Q&A Assistant** | A guided build that grows a planetary Q&A assistant from prompt template → RAG → tool calling. | (learning — no number needed) |
 | **RAG Eval Assistant** | A RAG assistant over 40 anime knowledge bases, with an evaluation harness that measures and improves retrieval. | recall@4 naive → hybrid → rerank *(fill after M7)* |
 
 ## Copy rules

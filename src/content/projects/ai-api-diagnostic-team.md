@@ -4,7 +4,7 @@ type: 'personal'
 track: 'n8n'
 tagline: 'A multi-agent API-troubleshooting team built low-code in n8n. Paste a URL or a failing response — it probes the endpoint, diagnoses the auth failure, and returns a likely cause with next steps.'
 preview: 'An orchestrator routes to HTTP, Authentication, and Root Cause agents, each grounded in its own runbook and traced end to end. Measured against a 12-scenario evaluation.'
-technologies: ['n8n', 'RAG', 'Supabase']
+technologies: ['n8n', 'RAG', 'Supabase', 'LangSmith']
 links: { repo: 'https://github.com/LeviTampus/api-diagnostic-team' }
 assets:
   image: 'projects/ai-api-diagnostic-team.gif'

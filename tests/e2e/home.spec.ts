@@ -36,7 +36,7 @@ test('projects index lists projects linking to case studies', async ({ page }) =
 
   await expect(page.getByRole('heading', { level: 2, name: /AI development Projects/i })).toBeVisible();
 
-  const row = page.getByRole('link', { name: /LangChain Practice Project/i }).first();
+  const row = page.getByRole('link', { name: /LangChain Q&A Assistant/i }).first();
   await expect(row).toBeVisible();
   await expect(row).toHaveAttribute('href', /\/projects\/langchain-practice-project\/?$/);
 });
@@ -47,6 +47,6 @@ test('a project case study page loads', async ({ page }) => {
   expect(response!.status(), 'case study page should not error').toBeLessThan(400);
 
   await expect(page.getByRole('heading', { level: 1 })).toContainText(
-    'LangChain Practice Project',
+    'LangChain Q&A Assistant',
   );
 });

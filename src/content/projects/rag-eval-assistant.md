@@ -4,7 +4,7 @@ type: 'personal'
 track: 'python'
 tagline: 'A RAG assistant over 40 anime knowledge bases, with an evaluation harness that measures retrieval and improves it.'
 preview: 'A grounded, cited assistant that compares a dense baseline, a hybrid retriever, and a reranked version against a hand-written question set.'
-technologies: ['Python', 'LangChain', 'Chroma', 'RAG']
+technologies: ['Python', 'LangChain', 'RAG', 'LangSmith']
 links:
   repo: 'https://github.com/LeviTampus/rag-eval-assistant'
 order: 1

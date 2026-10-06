@@ -1,5 +1,5 @@
 ---
-title: 'LangChain Practice Project'
+title: 'LangChain Q&A Assistant'
 type: 'learning'
 track: 'python'
 tagline: 'A guided build where a small planetary Q&A assistant grows from a prompt template to RAG to tool calling.'
